@@ -1,5 +1,5 @@
 package com.tricolorfire.graphics.editor;
 
-public class DrawableEditor {
+public class GraphicsEditor {
 	
 }
