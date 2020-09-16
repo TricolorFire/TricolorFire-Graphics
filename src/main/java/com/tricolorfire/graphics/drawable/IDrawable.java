@@ -30,4 +30,5 @@ public interface IDrawable extends IBounds {
 	
 	//获得一个Group
 	public Group getGroup();
+	
 }
