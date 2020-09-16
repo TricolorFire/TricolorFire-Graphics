@@ -17,7 +17,16 @@ public interface IDrawable extends IBounds {
 		return this.fillProperty().get();
 	}
 	
-	//设置
+	//设置Stroke
+	public ObjectProperty<Paint> strokeProperty();
+	
+	default void setStroke(Paint paint) {
+		this.strokeProperty().set(paint);
+	}
+	
+	default Paint getStroke() {
+		return this.strokeProperty().get();
+	}
 	
 	//获得一个Group
 	public Group getGroup();
