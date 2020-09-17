@@ -16,7 +16,7 @@ import javafx.scene.Node;
  *                                   |___________________|_________________________________|
  * 
  */
-public interface IDrawableCreator<T extends IDrawable> {
+public interface IDrawableCreativeProcess<T extends IDrawable> {
 	
 	/**
 	 * 默认跟随画笔参数
@@ -48,9 +48,9 @@ public interface IDrawableCreator<T extends IDrawable> {
 	default void undo(DrawableCreatorContext context) {}
 	
 	/**
-	 * 初始化节点创建[只执行一次该程序]
+	 * 初始化 临时图层节点创建[只执行一次该方法]
 	 */
-	public Node initTempCreate() ;
+	public Node initTempCreate(DrawableCreatorContext context) ;
 	
 	/**
 	 * <b>触发条件：</b> 当鼠标左键松开(release)一次/检测到一次输入信号
