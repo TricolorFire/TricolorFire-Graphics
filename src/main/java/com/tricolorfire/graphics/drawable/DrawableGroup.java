@@ -12,13 +12,11 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Shape;
-import javafx.scene.shape.StrokeLineCap;
-import javafx.scene.shape.StrokeLineJoin;
-import javafx.scene.shape.StrokeType;
 
+/**
+ * 
+ * 
+ */
 public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 	
 	@Override
