@@ -1,5 +1,7 @@
 package com.tricolorfire.graphics.layer;
 
-public class Layer {
+import javafx.scene.layout.Pane;
+
+public class Layer extends Pane{
 
 }
