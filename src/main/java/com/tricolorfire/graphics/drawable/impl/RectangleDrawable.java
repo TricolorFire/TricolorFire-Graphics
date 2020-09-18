@@ -1,16 +1,21 @@
 package com.tricolorfire.graphics.drawable.impl;
 
+import com.tricolorfire.graphics.drawable.DrawableType;
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
 
-import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 
-public class RectangleDrawable extends Rectangle implements IDrawable{
+public class RectangleDrawable extends Rectangle implements IDrawable {
+
+	
+	@Override
+	public Rectangle getNode() {
+		return this;
+	}
 
 	@Override
-	public Group getGroup() {
-		// TODO Auto-generated method stub
-		return null;
+	public DrawableType getType() {
+		return DrawableType.SHAPE;
 	}
 
 }

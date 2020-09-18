@@ -5,30 +5,30 @@ import javafx.beans.property.DoubleProperty;
 public interface IBounds {
 	
 	//x位置
-	public DoubleProperty xProperty();
+	public DoubleProperty layoutXProperty();
 	
-	default void setX(double x) {
-		this.xProperty().set(x);
+	default void setLayoutX(double x) {
+		this.layoutXProperty().set(x);
 	}
-	default double getX() {
-		return this.xProperty().get();
+	default double getLayoutX() {
+		return this.layoutXProperty().get();
 	}
 	
 	//y位置
-	public DoubleProperty yProperty();
+	public DoubleProperty layoutYProperty();
 	
-	default void setY(double y) {
-		this.yProperty().set(y);
+	default void setLayoutY(double y) {
+		this.layoutYProperty().set(y);
 	}
 	
-	default double getY() {
-		return this.yProperty().get();
+	default double getLayoutY() {
+		return this.layoutYProperty().get();
 	}
 	
 	//设置位置
 	default void setLocation(double x,double y) {
-		this.setX(x);
-		this.setY(y);
+		this.setLayoutX(x);
+		this.setLayoutY(y);
 	}
 	
 	//宽度

@@ -130,10 +130,43 @@ public class BrushParameters implements IGraphics {
 	}
 	
 	/**
+	 * Event
+	 */
+	public class ChangeEvent {
+		private Observable property;
+		private String name ;
+		private Object oldValue,newValue;
+		ChangeEvent(Observable property, String name, Object oldValue, Object newValue) {
+			super();
+			this.property = property;
+			this.name = name;
+			this.oldValue = oldValue;
+			this.newValue = newValue;
+		}
+		
+		public Observable getProperty() {
+			return property;
+		}
+		
+		public String getName() {
+			return name;
+		}
+		
+		public final Object getOldValue() {
+			return oldValue;
+		}
+		
+		public final Object getNewValue() {
+			return newValue;
+		}
+		
+	}
+	
+	/**
 	 * 笔刷参数发生改变监听器
 	 */
 	public interface IChangeListener {
-		public void onChanged(Observable property,Object oldValue,Object newValue);
+		public void onChanged(ChangeEvent event);
 	}
 
 	//计划模板:用于处理监听器事件的计划模板
@@ -141,7 +174,7 @@ public class BrushParameters implements IGraphics {
 		@Override
 		public <E extends Property<T>> void plan(E property,T oldValue ,T newValue) {
 			for(IChangeListener listener : changeListeners) {
-				listener.onChanged(property,oldValue, newValue);
+				listener.onChanged(new ChangeEvent(property, property.getName(), oldValue, newValue));
 			}
 		}
 	}

@@ -2,11 +2,11 @@ package com.tricolorfire.graphics.drawable;
 
 import java.util.LinkedList;
 
+import com.tricolorfire.graphics.drawable.BrushParameters.ChangeEvent;
 import com.tricolorfire.graphics.drawable.BrushParameters.IChangeListener;
 import com.tricolorfire.graphics.drawable.interfaces.IBrushEmployer;
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
 
-import javafx.beans.Observable;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -23,7 +23,14 @@ import javafx.scene.Node;
 public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 	
 	private static final String BRUSH_PARAMETERS = "brush parameters";
-	private ObjectProperty<BrushParameters> brushParametersProperty;
+	
+	private ObjectProperty<BrushParameters> brushParametersProperty;//笔刷参数
+	private DoubleProperty widthProperty;
+	private DoubleProperty heightProperty;
+	
+	public DrawableGroup() {
+		init();
+	}
 	
 	//初始化操作
 	private void init() {
@@ -32,44 +39,34 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 		brushParametersProperty.get().addChangeListener(new IChangeListener() {
 			//如果笔刷的一部分数据发生了改变，那么就让该组内的数据一起改变
 			@Override
-			public void onChanged(Observable property,Object oldValue,Object newValue) {
-				
+			public void onChanged(ChangeEvent event) {
+				if(event.getNewValue() != null) {
+					
+				}
 			}
 		});
+		//初始化DrawableChildren
+		initDrawableChildren();
 	}
 	
 	@Override
 	public ObjectProperty<BrushParameters> brushParametersProperty() {
 		return brushParametersProperty;
 	}
-	
-	@Override
-	public DoubleProperty xProperty() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public DoubleProperty yProperty() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public DoubleProperty widthProperty() {
-		return null;
+		return widthProperty;
 	}
 
 	@Override
 	public DoubleProperty heightProperty() {
-		// TODO Auto-generated method stub
-		return null;
+		return heightProperty;
 	}
 	
 	@Override
-	public Group getGroup() {
-		// TODO Auto-generated method stub
-		return null;
+	public Group getNode() {
+		return this;
 	}
 
 	/****************************************************************
@@ -109,6 +106,11 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 	@Deprecated
 	public ObservableList<Node> getChildren() {
 		return null;
+	}
+
+	@Override
+	public DrawableType getType() {
+		return DrawableType.GROUP;
 	}
 	
 }

@@ -58,9 +58,6 @@ public class App extends Application {
 			@Override
 			public <E extends Property<Number>> void plan(E property,Number oldVaule, Number newValue) {
 				
-				System.out.println("old" + oldVaule);
-				System.out.println("new" + newValue);
-				
 			}
 		};
 		

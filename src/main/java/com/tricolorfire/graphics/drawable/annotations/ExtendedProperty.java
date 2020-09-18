@@ -6,5 +6,6 @@ package com.tricolorfire.graphics.drawable.annotations;
 public @interface ExtendedProperty {
 	
 	String name() default "";
+	String propertyGroup() default "properties";
 	
 }
