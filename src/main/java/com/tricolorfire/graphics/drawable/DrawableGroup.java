@@ -2,11 +2,14 @@ package com.tricolorfire.graphics.drawable;
 
 import java.util.LinkedList;
 
+import com.tricolorfire.graphics.drawable.BrushParameters.IChangeListener;
 import com.tricolorfire.graphics.drawable.interfaces.IBrushEmployer;
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
 
+import javafx.beans.Observable;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -19,10 +22,25 @@ import javafx.scene.Node;
  */
 public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 	
+	private static final String BRUSH_PARAMETERS = "brush parameters";
+	private ObjectProperty<BrushParameters> brushParametersProperty;
+	
+	//初始化操作
+	private void init() {
+		brushParametersProperty = new SimpleObjectProperty<>(this,BRUSH_PARAMETERS,new BrushParameters());
+		//设置监听器
+		brushParametersProperty.get().addChangeListener(new IChangeListener() {
+			//如果笔刷的一部分数据发生了改变，那么就让该组内的数据一起改变
+			@Override
+			public void onChanged(Observable property,Object oldValue,Object newValue) {
+				
+			}
+		});
+	}
+	
 	@Override
 	public ObjectProperty<BrushParameters> brushParametersProperty() {
-		
-		return null;
+		return brushParametersProperty;
 	}
 	
 	@Override
@@ -54,10 +72,9 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 		return null;
 	}
 
-	//
-	//
-	//
-	//
+	/****************************************************************
+	 *                       [ 跟随处理 ]                           * 
+	 ****************************************************************/
 
 	private ObservableList<IDrawable> drawableList;
 	private void initDrawableChildren(){
@@ -69,13 +86,12 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 		drawableList.addListener(new ListChangeListener<IDrawable>() {
 			@Override
 			public void onChanged(Change<? extends IDrawable> c) {
-				//执行这个才能获取信息
-				c.next();
 				//绑定同步
+				while (c.next()) {
+					
 				
-				//
 				
-				
+				}
 			}
 			
 		});
@@ -94,4 +110,5 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 	public ObservableList<Node> getChildren() {
 		return null;
 	}
+	
 }

@@ -9,6 +9,7 @@ import com.tricolorfire.graphics.util.IPropertyPlan;
 import com.tricolorfire.graphics.util.PlannedDoubleProperty;
 import com.tricolorfire.graphics.util.PlannedObjectProperty;
 
+import javafx.beans.Observable;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
@@ -132,15 +133,15 @@ public class BrushParameters implements IGraphics {
 	 * 笔刷参数发生改变监听器
 	 */
 	public interface IChangeListener {
-		public void change(String paramName, Object value);
+		public void onChanged(Observable property,Object oldValue,Object newValue);
 	}
 
 	//计划模板:用于处理监听器事件的计划模板
 	class PlanTemplate<T> implements IPropertyPlan<T>{
 		@Override
-		public <E extends Property<T>> void plan(E property) {
+		public <E extends Property<T>> void plan(E property,T oldValue ,T newValue) {
 			for(IChangeListener listener : changeListeners) {
-				listener.change( property.getName() , property.getValue());
+				listener.onChanged(property,oldValue, newValue);
 			}
 		}
 	}

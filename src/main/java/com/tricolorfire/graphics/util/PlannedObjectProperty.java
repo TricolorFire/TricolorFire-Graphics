@@ -1,11 +1,9 @@
 package com.tricolorfire.graphics.util;
 
-import javafx.beans.property.ObjectPropertyBase;
+import javafx.beans.property.SimpleObjectProperty;
 
-public class PlannedObjectProperty<T> extends ObjectPropertyBase<T>{
+public class PlannedObjectProperty<T> extends SimpleObjectProperty<T>{
 
-	private Object bean;
-	private String name;
 	private IPropertyPlan<T> plan;
 	
 	public PlannedObjectProperty(IPropertyPlan<T> plan) {
@@ -21,26 +19,17 @@ public class PlannedObjectProperty<T> extends ObjectPropertyBase<T>{
 	}
 	
 	public PlannedObjectProperty(Object bean, String name , T value ,IPropertyPlan<T> plan) {
-		super();
+		super(bean,name,value);
 		this.plan = plan;
-		this.bean = bean;
-		this.name = name;
-		this.set(value);
+		oldValue = getValue();
 	}
 	
+	private T oldValue;
     protected void invalidated() {
     	super.invalidated();
-    	plan.plan(this);
+    	T newValue = getValue();
+    	plan.plan(this,oldValue,newValue);
+    	oldValue = newValue;
     }
 	
-	@Override
-	public Object getBean() {
-		return bean;
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
 }

@@ -21,11 +21,15 @@ public class PlannedDoubleProperty extends SimpleDoubleProperty {
 	public PlannedDoubleProperty(Object bean, String name, double initialValue,IPropertyPlan<Number> plan) {
 		super(bean, name, initialValue);
 		this.plan = plan;
+		this.oldValue = getValue();
 	}
 	
+	private Number oldValue;
     protected void invalidated() {
     	super.invalidated();
-    	plan.plan(this);
+    	Number newValue = getValue();
+    	plan.plan(this,oldValue,newValue);
+    	oldValue = newValue;
     }
 
 }
