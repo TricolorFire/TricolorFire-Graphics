@@ -1,6 +1,6 @@
 package com.tricolorfire.graphics.creator;
 
-import com.tricolorfire.graphics.drawable.IDrawable;
+import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
 
 import javafx.scene.Node;
 

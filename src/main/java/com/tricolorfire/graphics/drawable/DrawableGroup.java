@@ -2,6 +2,9 @@ package com.tricolorfire.graphics.drawable;
 
 import java.util.LinkedList;
 
+import com.tricolorfire.graphics.drawable.interfaces.IBrushEmployer;
+import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
@@ -52,6 +55,11 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	//
+	//
+	//
+	//
 
 	private ObservableList<IDrawable> drawableList;
 	private void initDrawableChildren(){

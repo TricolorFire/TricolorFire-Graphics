@@ -1,4 +1,6 @@
-package com.tricolorfire.graphics.drawable;
+package com.tricolorfire.graphics.drawable.interfaces;
+
+import com.tricolorfire.graphics.drawable.BrushParameters;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;

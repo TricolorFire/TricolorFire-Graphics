@@ -1,4 +1,4 @@
-package com.tricolorfire.graphics.drawable;
+package com.tricolorfire.graphics.drawable.interfaces;
 
 import javafx.beans.property.DoubleProperty;
 
