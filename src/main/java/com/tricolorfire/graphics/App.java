@@ -13,6 +13,7 @@ import javafx.beans.property.Property;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -44,6 +45,7 @@ public class App extends Application {
 
     	Color color;
     	Paint paint;
+    	
     	LinearGradient l = new LinearGradient(0, 0, 200, 200, false, CycleMethod.REPEAT,         
     			Collections.unmodifiableList(Arrays.asList(
                 new Stop(0.5, Color.RED),
@@ -74,6 +76,13 @@ public class App extends Application {
         var javafxVersion = SystemInfo.javafxVersion();
 
         var label = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
+        
+        FlowPane flowPane = new FlowPane();
+        flowPane.getChildren().add(label);
+        System.out.println(label.getWidth());
+        System.out.println(flowPane.getWidth());
+        
+        //var scene = new Scene(new StackPane(flowPane), 640, 480);
         var scene = new Scene(new StackPane(svgG), 640, 480);
         
         stage.setScene(scene);
