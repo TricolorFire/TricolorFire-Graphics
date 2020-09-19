@@ -16,6 +16,8 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
@@ -276,26 +278,34 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 		drawableList.clear();
 		super.getChildren().clear();
 		
-		//设置大小
+		//设置位置
 		double dx = getLayoutX();
 		double dy = getLayoutY();
 		for(IDrawable drawable : ret) {
 			drawable.setLayoutX(dx + drawable.getLayoutX());
 			drawable.setLayoutY(dy + drawable.getLayoutY());
 		}
+		Parent parent = getParent();
+		if(parent instanceof Pane) {
+			List<Node> childrens = ((Pane)parent).getChildren();
+			for(IDrawable drawable : ret) {
+				childrens.add(drawable.getNode());
+			}
+		}
 		return ret;
 	}
 	
 	/**
-	 * 该方法被废弃,调用该方法将返回null,如果需要获取子节点请继承该类并调用 getDrawableChildren()
-	 * @return null
+	 * 该方法被废弃,调用该方法将返回ChildrenUnmodifiable,如果需要获取子节点请继承该类并调用 getDrawableChildren()
+	 * @return ChildrenUnmodifiable
 	 */
+	
 	@Override
 	@Deprecated
 	public ObservableList<Node> getChildren() {
-		return null;
+		return super.getChildrenUnmodifiable();
 	}
-
+	
 	@Override
 	public DrawableType getType() {
 		return DrawableType.GROUP;

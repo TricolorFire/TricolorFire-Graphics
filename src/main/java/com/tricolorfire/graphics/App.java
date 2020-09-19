@@ -5,6 +5,8 @@ import java.util.Collections;
 
 import com.jfoenix.svg.SVGGlyph;
 import com.jfoenix.svg.SVGGlyphLoader;
+import com.tricolorfire.graphics.drawable.DrawableGroup;
+import com.tricolorfire.graphics.drawable.impl.RectangleDrawable;
 import com.tricolorfire.graphics.util.IPropertyPlan;
 import com.tricolorfire.graphics.util.PlannedDoubleProperty;
 
@@ -14,6 +16,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -73,10 +76,48 @@ public class App extends Application {
         
         
         //var scene = new Scene(new StackPane(flowPane), 640, 480);
+        //StackPane sp;
+        Pane pane = new Pane();
+        RectangleDrawable rect0 = new RectangleDrawable();
+        rect0.setLocation(100, 100);
+        rect0.setSize(100, 200);
+        
+        RectangleDrawable rect1 = new RectangleDrawable();
+        rect1.setLocation(50, 50);
+        rect1.setSize(50, 50);
+        
+        DrawableGroup dgroup = new DrawableGroup();
+        dgroup.combine(rect0,rect1);
+        pane.getChildren().addAll(dgroup);
+        //pane.getChildren().addAll(rect0,rect1);
+        
+        //dgroup.autosize();
+        
+        pane.autosize();
+        
+        double x = dgroup.getLayoutX();
+        double y = dgroup.getLayoutY();
+        
+        //double width = dgroup.getWidth();
+        //double height = dgroup.getHeight();
+        
+        //System.out.println("x:"+ x + " y:" + y);
+        //System.out.println("width:" + width + " height:" + height);
+
+        dgroup.setFill(Color.BLUE);
+        double width = pane.getWidth();
+        double height = pane.getHeight();
+        pane.setStyle("-fx-background-color:#000000");
+        
+        System.out.println("x:"+ x + " y:" + y);
+        System.out.println("width:" + width + " height:" + height);
+        
+        System.out.println();
         
         
-        var scene = new Scene(new StackPane(svgG), 640, 480);
         
+        var scene = new Scene(new Pane(pane), 640, 480);
+
         stage.setScene(scene);
         stage.show();
     }
