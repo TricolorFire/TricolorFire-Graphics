@@ -8,6 +8,7 @@ import com.jfoenix.svg.SVGGlyphLoader;
 import com.tricolorfire.graphics.drawable.DrawableGroup;
 import com.tricolorfire.graphics.drawable.impl.EllipseDrawable;
 import com.tricolorfire.graphics.drawable.impl.RectangleDrawable;
+import com.tricolorfire.graphics.ui.StaffGauge;
 import com.tricolorfire.graphics.util.IPropertyPlan;
 import com.tricolorfire.graphics.util.PlannedDoubleProperty;
 
@@ -16,6 +17,7 @@ import javafx.beans.property.Property;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -123,9 +125,12 @@ public class App extends Application {
         
         System.out.println();
         
-        
-        
-        var scene = new Scene(new Pane(pane), 640, 480);
+        BorderPane bpane = new BorderPane();
+        StaffGauge staffGauge = new StaffGauge();
+        staffGauge.setPrefHeight(20);
+        bpane.setTop(staffGauge);
+        bpane.setCenter(pane);
+        var scene = new Scene(bpane, 640, 480);
 
         stage.setScene(scene);
         stage.show();

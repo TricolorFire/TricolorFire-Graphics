@@ -52,7 +52,6 @@ public class EllipseDrawable extends Ellipse implements IDrawable{
 		heightProperty = new PlannedDoubleProperty(EllipseDrawable.this,"height",radiusY*2,new IPropertyPlan<Number>() {
 			@Override
 			public <E extends Property<Number>> void plan(E property, Number oldValue, Number newValue) {
-				System.out.println("h:"+oldValue + " " + newValue);
 				if(!oldValue.equals(newValue)) {
 					radiusYProperty().set((double)newValue/2);
 				}
