@@ -30,8 +30,8 @@ public class EllipseDrawable extends Ellipse implements IDrawable{
 		initSizeProperty(radiusX,radiusY);
 	}
 
-	//创建一个椭圆
-	public static EllipseDrawable create(double x,double y,double radiusX, double radiusY) {
+	//从左上角创建一个椭圆
+	public static EllipseDrawable createFromTopLeftCorner(double x,double y,double radiusX, double radiusY) {
 		EllipseDrawable ellipse = new EllipseDrawable(radiusX,radiusY,radiusX,radiusY);
 		ellipse.setLayoutX(x);
 		ellipse.setLayoutY(y);
