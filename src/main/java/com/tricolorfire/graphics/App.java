@@ -6,6 +6,7 @@ import java.util.Collections;
 import com.jfoenix.svg.SVGGlyph;
 import com.jfoenix.svg.SVGGlyphLoader;
 import com.tricolorfire.graphics.drawable.DrawableGroup;
+import com.tricolorfire.graphics.drawable.impl.EllipseDrawable;
 import com.tricolorfire.graphics.drawable.impl.RectangleDrawable;
 import com.tricolorfire.graphics.util.IPropertyPlan;
 import com.tricolorfire.graphics.util.PlannedDoubleProperty;
@@ -69,8 +70,11 @@ public class App extends Application {
         
         FlowPane flowPane = new FlowPane();
         flowPane.getChildren().add(label);
-        System.out.println(label.getWidth());
-        System.out.println(flowPane.getWidth());
+        
+        //flowPane.autosize();
+        //label.autosize();
+        //System.out.println(label.getWidth());
+        //System.out.println(flowPane.getWidth());
         
         
         
@@ -86,11 +90,16 @@ public class App extends Application {
         rect1.setLocation(50, 50);
         rect1.setSize(50, 50);
         
-        DrawableGroup dgroup = new DrawableGroup();
-        dgroup.combine(rect0,rect1);
-        pane.getChildren().addAll(dgroup);
-        //pane.getChildren().addAll(rect0,rect1);
+        EllipseDrawable ellipse = new EllipseDrawable(30, 30, 30, 20);
         
+        DrawableGroup dgroup = DrawableGroup.create(rect0,rect1,ellipse);
+        
+        //dgroup.setWidth(100);
+        //dgroup.setHeight(200);
+        
+        pane.getChildren().addAll(dgroup);
+        
+        //pane.getChildren().addAll(rect0,rect1);
         //dgroup.autosize();
         
         pane.autosize();

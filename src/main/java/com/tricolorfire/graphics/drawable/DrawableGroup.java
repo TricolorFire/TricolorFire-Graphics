@@ -5,9 +5,12 @@ import java.util.List;
 
 import com.tricolorfire.graphics.drawable.interfaces.IBrushEmployer;
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
+import com.tricolorfire.graphics.util.IPropertyPlan;
+import com.tricolorfire.graphics.util.PlannedDoubleProperty;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -37,26 +40,76 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 	private DoubleProperty widthProperty;
 	private DoubleProperty heightProperty;
 	
-	public DrawableGroup() {
+	private double initWidth,initHeight;
+	
+	private DrawableGroup() {
 		init();
+	}
+	
+	/**
+	 * 创建一个DrawableGroup
+	 * @param drawables
+	 * @return
+	 */
+	public static DrawableGroup create(IDrawable...drawables) {
+		DrawableGroup group = new DrawableGroup();
+		group.drawableList.addAll(drawables);
+		return group;
 	}
 	
 	//初始化操作
 	private void init() {
 
-		brushParametersProperty = new SimpleObjectProperty<>(this,BRUSH_PARAMETERS,new BrushParameters());
+		//创建画笔参数配置
+		brushParametersProperty = 
+				new SimpleObjectProperty<>(this,BRUSH_PARAMETERS,new BrushParameters());
 		
+		//设置可以autosize子节点
 		setAutoSizeChildren(true);
 		
 		//添加图形监听器
 		initGraphicsListener();
 		
-		//初始化在调整Group大小时，该group的对子节点的操作
-		
 		//初始化DrawableChildren
 		initDrawableChildren();
+		
 	}
 	
+	private void initSizeProperties() {
+
+		//宽度配置
+		widthProperty = new PlannedDoubleProperty(DrawableGroup.this,"width",initWidth,new IPropertyPlan<Number>() {
+			@Override
+			public <E extends Property<Number>> void plan(E property, Number oldValue, Number newValue) {
+				//按照比例对内部的drawable进行扩大和缩小啊
+				double scale = (double)oldValue/(double)newValue;
+				double tw;
+				for(IDrawable drawable : drawableList) {
+					tw = drawable.getWidth();
+					drawable.setWidth(tw*scale);
+				}
+				autosize();
+				layoutChildren();
+			}
+		});
+		
+		//高度配置
+		heightProperty = new PlannedDoubleProperty(DrawableGroup.this,"height",initHeight,new IPropertyPlan<Number>() {
+			@Override
+			public <E extends Property<Number>> void plan(E property, Number oldValue, Number newValue) {
+				//按照比例对内部的drawable进行扩大和缩小啊
+				double scale = (double)oldValue/(double)newValue;
+				double th;
+				for(IDrawable drawable : drawableList) {
+					th = drawable.getHeight();
+					drawable.setHeight(th*scale);
+				}
+				autosize();
+				layoutChildren();
+			}
+		});
+	}
+
 	@Override
 	public ObjectProperty<BrushParameters> brushParametersProperty() {
 		return brushParametersProperty;
@@ -186,27 +239,42 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 		//添加监听器，将修改的信息同步到nodeList里面
 		drawableList.addListener(new ListChangeListener<IDrawable>() {
 			
-			//获取最小位置
-			private double[] getMinPosition(List<IDrawable> drawables) {
+			//获取最小/最大位置
+			private double[] getExtremePosition(List<IDrawable> drawables) {
 				//计算最小的LayoutX,LayoutY
 				double minX = Double.MAX_VALUE,minY = Double.MAX_VALUE;
+				double maxX = Double.MIN_VALUE,maxY = Double.MIN_VALUE;
+				
 				for(IDrawable drawable : drawables) {
+					
 					double x = drawable.getLayoutX();
 					double y = drawable.getLayoutY();
 					if(minX > x) {
 						minX = x;
 					}
-					
 					if(minY > y) {
 						minY = y;
 					}
+					
+					double dx = x + drawable.getWidth();
+					double dy = y + drawable.getHeight();
+					if(maxX < dx) {
+						maxX = dx;
+					}
+					if(maxY < dy) {
+						maxY = dy;
+					}
 				}
-				return new double[] {minX,minY};
+				return new double[] {minX,minY,maxX,maxY};
 			}
 			
 			//获取最小值
 			private double min(double a,double b) {
 				return a<b?a:b;
+			}
+			//获取最大值
+			private double max(double a,double b) {
+				return a>b?a:b;
 			}
 			
 			@Override
@@ -220,12 +288,14 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 						@SuppressWarnings("unchecked")
 						List<IDrawable> addedList = (List<IDrawable>) c.getAddedSubList();
 						
-						//获取minX minY
-						double minAdded[] = getMinPosition(addedList);
-						double minNow[] = getMinPosition(drawableList);
+						//获取极值
+						double extremeAdded[] = getExtremePosition(addedList);
+						double extremeNow[] = getExtremePosition(drawableList);
 						
-						double minX = min(minAdded[0],minNow[0]);
-						double minY = min(minAdded[1],minNow[1]);
+						double minX = min(extremeAdded[0],extremeNow[0]);
+						double minY = min(extremeAdded[1],extremeNow[1]);
+						double maxX = max(extremeAdded[2],extremeNow[2]);
+						double maxY = max(extremeAdded[3],extremeNow[3]);
 						
 						//将数据放入Group中
 						for(IDrawable drawable : addedList) {
@@ -238,6 +308,12 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 						setLayoutX(minX);
 						setLayoutY(minY);
 						
+						//计算初始宽高
+						initWidth = maxX - minX;
+						initHeight = maxY - minY;
+						
+						//初始化在调整Group大小时，该group的对子节点的操作
+						initSizeProperties();
 					}
 					
 					//如果是移除,不做处理
@@ -255,13 +331,13 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 		return drawableList;
 	}
 	
-	/**
-	 * 组合
-	 * <br/>对于外部来说的显式操作
-	 */
-	public void combine(IDrawable...drawables) {
-		drawableList.addAll(drawables);
-	}
+//	/**
+//	 * 组合
+//	 * <br/>对于外部来说的显式操作
+//	 */
+//	public void combine(IDrawable...drawables) {
+//		drawableList.addAll(drawables);
+//	}
 	
 	/**
 	 * 拆散
