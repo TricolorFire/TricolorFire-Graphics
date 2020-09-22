@@ -53,7 +53,7 @@ public class CircleDrawable extends Circle implements IDrawable{
 				}
 			}
 		});
-		heightProperty = new SimpleDoubleProperty();
+		heightProperty = new SimpleDoubleProperty(CircleDrawable.this,"height",radius*2);
 		widthProperty.bindBidirectional(heightProperty);
 		
 		radiusProperty().addListener(new ChangeListener<Number>() {
