@@ -1,7 +1,6 @@
 package com.tricolorfire.graphics.drawable.impl;
 
-import com.tricolorfire.graphics.drawable.DrawableType;
-import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
+import com.tricolorfire.graphics.drawable.interfaces.IShapeDrawable;
 import com.tricolorfire.graphics.util.IPropertyPlan;
 import com.tricolorfire.graphics.util.PlannedDoubleProperty;
 
@@ -14,7 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
-public class CircleDrawable extends Circle implements IDrawable{
+public class CircleDrawable extends Circle implements IShapeDrawable {
 	
 	public static final Paint DEFAULT_FILL = Color.BLACK;
 	
@@ -35,7 +34,7 @@ public class CircleDrawable extends Circle implements IDrawable{
 	}
 
 	public CircleDrawable(double radius, Paint fill) {
-		this(0,0,radius, fill);
+		this(radius,radius,radius, fill);
 	}
 
 	public CircleDrawable(double radius) {
@@ -77,11 +76,6 @@ public class CircleDrawable extends Circle implements IDrawable{
 	@Override
 	public Circle getNode() {
 		return this;
-	}
-
-	@Override
-	public DrawableType getType() {
-		return DrawableType.SHAPE;
 	}
 
 }

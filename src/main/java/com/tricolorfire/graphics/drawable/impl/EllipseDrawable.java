@@ -1,7 +1,6 @@
 package com.tricolorfire.graphics.drawable.impl;
 
-import com.tricolorfire.graphics.drawable.DrawableType;
-import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
+import com.tricolorfire.graphics.drawable.interfaces.IShapeDrawable;
 import com.tricolorfire.graphics.util.IPropertyPlan;
 import com.tricolorfire.graphics.util.PlannedDoubleProperty;
 
@@ -11,7 +10,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.shape.Ellipse;
 
-public class EllipseDrawable extends Ellipse implements IDrawable{
+public class EllipseDrawable extends Ellipse implements IShapeDrawable{
 	
 	private DoubleProperty widthProperty;
 	private DoubleProperty heightProperty;
@@ -21,7 +20,7 @@ public class EllipseDrawable extends Ellipse implements IDrawable{
 	}
 
 	public EllipseDrawable(double radiusX, double radiusY) {
-		this(0,0,radiusX, radiusY);
+		this(radiusX,radiusY,radiusX, radiusY);
 	}
 	
 	public EllipseDrawable(double centerX, double centerY, double radiusX, double radiusY) {
@@ -79,11 +78,6 @@ public class EllipseDrawable extends Ellipse implements IDrawable{
 	@Override
 	public Ellipse getNode() {
 		return this;
-	}
-
-	@Override
-	public DrawableType getType() {
-		return DrawableType.SHAPE;
 	}
 
 }

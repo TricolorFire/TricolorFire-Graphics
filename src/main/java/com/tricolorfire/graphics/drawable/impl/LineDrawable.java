@@ -1,7 +1,6 @@
 package com.tricolorfire.graphics.drawable.impl;
 
-import com.tricolorfire.graphics.drawable.DrawableType;
-import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
+import com.tricolorfire.graphics.drawable.interfaces.IShapeDrawable;
 import com.tricolorfire.graphics.util.IPropertyPlan;
 import com.tricolorfire.graphics.util.PlannedDoubleProperty;
 
@@ -11,7 +10,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.shape.Line;
 
-public class LineDrawable extends Line implements IDrawable{
+public class LineDrawable extends Line  implements IShapeDrawable{
 
 	private DoubleProperty widthProperty;
 	private DoubleProperty heightProperty;
@@ -105,11 +104,6 @@ public class LineDrawable extends Line implements IDrawable{
 	@Override
 	public Line getNode() {
 		return this;
-	}
-
-	@Override
-	public DrawableType getType() {
-		return DrawableType.SHAPE;
 	}
 
 }

@@ -2,8 +2,7 @@ package com.tricolorfire.graphics.drawable.impl;
 
 import java.util.List;
 
-import com.tricolorfire.graphics.drawable.DrawableType;
-import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
+import com.tricolorfire.graphics.drawable.interfaces.IShapeDrawable;
 import com.tricolorfire.graphics.util.IPropertyPlan;
 import com.tricolorfire.graphics.util.PlannedDoubleProperty;
 
@@ -12,7 +11,7 @@ import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.scene.shape.Polyline;
 
-public class PolylineDrawable extends Polyline implements IDrawable{
+public class PolylineDrawable extends Polyline  implements IShapeDrawable{
 	
 	private static final double[] EMPTY_DOUBLE_ARRAY = new double[] {};
 	
@@ -122,11 +121,6 @@ public class PolylineDrawable extends Polyline implements IDrawable{
 	@Override
 	public Polyline getNode() {
 		return this;
-	}
-
-	@Override
-	public DrawableType getType() {
-		return DrawableType.SHAPE;
 	}
 
 }

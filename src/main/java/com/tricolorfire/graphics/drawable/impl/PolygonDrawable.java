@@ -2,8 +2,7 @@ package com.tricolorfire.graphics.drawable.impl;
 
 import java.util.List;
 
-import com.tricolorfire.graphics.drawable.DrawableType;
-import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
+import com.tricolorfire.graphics.drawable.interfaces.IShapeDrawable;
 import com.tricolorfire.graphics.util.IPropertyPlan;
 import com.tricolorfire.graphics.util.PlannedDoubleProperty;
 
@@ -15,7 +14,7 @@ import javafx.scene.shape.Polygon;
 /**
  * 多边形Drawable
  */
-public class PolygonDrawable extends Polygon implements IDrawable {
+public class PolygonDrawable extends Polygon  implements IShapeDrawable {
 
 	private static final double[] EMPTY_DOUBLE_ARRAY = new double[] {};
 	
@@ -125,11 +124,6 @@ public class PolygonDrawable extends Polygon implements IDrawable {
 	@Override
 	public Polygon getNode() {
 		return this;
-	}
-
-	@Override
-	public DrawableType getType() {
-		return DrawableType.SHAPE;
 	}
 
 }

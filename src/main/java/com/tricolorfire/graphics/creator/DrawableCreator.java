@@ -1,6 +1,7 @@
 package com.tricolorfire.graphics.creator;
 
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
+import com.tricolorfire.graphics.layer.Layer;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -12,20 +13,22 @@ public class DrawableCreator implements EventHandler<MouseEvent>{
 	private DrawableCreatorContext context;
 	private boolean first = true;
 	
-	public DrawableCreator(IDrawableCreativeProcess<IDrawable> context) {
-		
+	public DrawableCreator(Layer layer) {
+		context = new DrawableCreatorContext(layer);
 	}
 	
 	@Override
 	public void handle(MouseEvent event) {
 		
+		//设置当前坐标
+		context.setNowX(event.getX());
+		context.setNowY(event.getY());
+		
 		//第一次点击
 		if(first && event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
 			process.initTempCreate(context);
 			first = false;
-		}
-		
-		if (event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
+		} else if (event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
 			//
 			
 			//
@@ -37,6 +40,21 @@ public class DrawableCreator implements EventHandler<MouseEvent>{
 		} else if(event.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {
 			process.drag(context);
 		}  else if(event.getEventType().equals(MouseEvent.MOUSE_RELEASED)) {
+			
+			//记录数据
+			context.xPoints().add(event.getX());
+			context.yPoints().add(event.getY());
+			
+			//构造临时节点
+			process.tempCreate(context);
+			if(process.isCompleted(context)) {
+				//构建出drawable
+				IDrawable drawable = process.create(context);
+				//TODO 将drawable 置入矢量层
+				
+				//清所有临时节点
+				context.getTmpNodes().clear();
+			}
 			
 		}		
 	}
