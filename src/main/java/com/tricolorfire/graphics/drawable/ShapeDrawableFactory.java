@@ -1,6 +1,8 @@
 package com.tricolorfire.graphics.drawable;
 
 import com.tricolorfire.graphics.drawable.impl.EllipseDrawable;
+import com.tricolorfire.graphics.drawable.impl.LineDrawable;
+import com.tricolorfire.graphics.drawable.impl.PolygonDrawable;
 import com.tricolorfire.graphics.drawable.impl.RectangleDrawable;
 
 public class ShapeDrawableFactory {
@@ -19,5 +21,12 @@ public class ShapeDrawableFactory {
 		return rectangle;
 	}
 	
+	//创建一个多边形
+	public static PolygonDrawable createPolygonFromTopLeftCorner(double x,double y,double[] points) {
+		PolygonDrawable polygon = new PolygonDrawable(points);
+		polygon.setLocation(x, y);
+		return polygon;
+	}
 	
+	public static LineDrawable 
 }

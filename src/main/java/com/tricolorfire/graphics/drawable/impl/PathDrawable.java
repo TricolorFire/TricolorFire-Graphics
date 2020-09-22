@@ -11,10 +11,6 @@ public class PathDrawable extends Path implements IDrawable{
 	private DoubleProperty widthProperty;
 	private DoubleProperty heightProperty;
 	
-	private void init() {
-		
-	}
-	
 	@Override
 	public DoubleProperty widthProperty() {
 		return widthProperty;

@@ -106,11 +106,11 @@ public class App extends Application {
         
         PolygonDrawable polygon = new PolygonDrawable(120,160,80,80,150,120);
         
-        DrawableGroup dgroup = DrawableGroup.create(rect0,rect1,ellipse,polygon);
+        DrawableGroup dgroup = DrawableGroup.create(polygon);
         //////////////////////////////////////////////////////////////////////////
 
-        //dgroup.setWidth(100);
-        //dgroup.setHeight(200);
+        dgroup.setWidth(100);
+        dgroup.setHeight(200);
         
         pane.getChildren().addAll(dgroup);
         

@@ -87,6 +87,7 @@ public class PolygonDrawable extends Polygon implements IDrawable {
 			//让其移动到(0,0)位置
 			moveTo(getPoints(), -extreme[0], -extreme[1]);
 		}
+		
 		widthProperty = new PlannedDoubleProperty(PolygonDrawable.this, "width", width, new IPropertyPlan<Number>() {
 			@Override
 			public <E extends Property<Number>> void plan(E property, Number oldValue, Number newValue) {
