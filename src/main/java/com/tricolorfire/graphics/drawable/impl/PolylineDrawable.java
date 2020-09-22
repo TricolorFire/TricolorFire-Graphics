@@ -20,22 +20,18 @@ public class PolylineDrawable extends Polyline implements IDrawable{
 	private DoubleProperty heightProperty;
 	
 	public PolylineDrawable() {		
-		this(true,EMPTY_DOUBLE_ARRAY);
+		this(EMPTY_DOUBLE_ARRAY);
 	}
-
+	
 	public PolylineDrawable(double... points) {
-		this(true,points);
-	}
-	
-	public PolylineDrawable(boolean flag ,double... points) {
 		super(points);
-		init(flag);
+		init();
 	}
 	
-	private void init(boolean flag) {
+	private void init() {
 		
 		//初始化widthProperty和heightProperty
-		initSizeProperties(flag);
+		initSizeProperties();
 		
 	}
 	
@@ -74,16 +70,15 @@ public class PolylineDrawable extends Polyline implements IDrawable{
 		}
 	}
 	
-	private void initSizeProperties(boolean flag) {
+	private void initSizeProperties() {
 		
 		double[] extreme = computeExtreme(getPoints());
 		double width = extreme[2] - extreme[0];
 		double height = extreme[3] - extreme[1];
 		
-		if(flag) {
-			//让其移动到(0,0)位置
-			moveTo(getPoints(), -extreme[0], -extreme[1]);
-		}
+		//让其移动到(0,0)位置
+		moveTo(getPoints(), -extreme[0], -extreme[1]);
+		setLocation(extreme[0],extreme[1]);
 		
 		widthProperty = new PlannedDoubleProperty(PolylineDrawable.this, "width", width, new IPropertyPlan<Number>() {
 			@Override

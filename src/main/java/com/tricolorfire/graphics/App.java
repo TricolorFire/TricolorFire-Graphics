@@ -21,6 +21,7 @@ import javafx.beans.property.Property;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -102,15 +103,20 @@ public class App extends Application {
         
         Stack<Integer> st;
         
-        EllipseDrawable ellipse = ShapeDrawableFactory.createEllipseFromTopLeftCorner(0, 0, 10, 30);
+        EllipseDrawable ellipse = ShapeDrawableFactory.createEllipseFromTopLeftCorner(120, 120, 10, 30);
         
         PolygonDrawable polygon = new PolygonDrawable(120,160,80,80,150,120);
+        //polygon.setLayoutX(100);
+        //polygon.setLayoutY(120);
         
         DrawableGroup dgroup = DrawableGroup.create(polygon);
         //////////////////////////////////////////////////////////////////////////
-
+        dgroup.setFill(Color.BLUE);
         dgroup.setWidth(100);
         dgroup.setHeight(200);
+        
+        Canvas canvas = new Canvas(200,200);
+        dgroup.draw(canvas);
         
         pane.getChildren().addAll(dgroup);
         
@@ -128,7 +134,6 @@ public class App extends Application {
         //System.out.println("x:"+ x + " y:" + y);
         //System.out.println("width:" + width + " height:" + height);
 
-        dgroup.setFill(Color.BLUE);
         double width = pane.getWidth();
         double height = pane.getHeight();
         
