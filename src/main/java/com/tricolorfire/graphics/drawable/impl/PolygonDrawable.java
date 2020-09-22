@@ -1,10 +1,15 @@
 package com.tricolorfire.graphics.drawable.impl;
 
+import java.util.List;
+
 import com.tricolorfire.graphics.drawable.DrawableType;
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
+import com.tricolorfire.graphics.util.IPropertyPlan;
+import com.tricolorfire.graphics.util.PlannedDoubleProperty;
 
 import javafx.beans.property.DoubleProperty;
-import javafx.scene.Node;
+import javafx.beans.property.Property;
+import javafx.collections.ObservableList;
 import javafx.scene.shape.Polygon;
 
 /**
@@ -12,20 +17,117 @@ import javafx.scene.shape.Polygon;
  */
 public class PolygonDrawable extends Polygon implements IDrawable {
 
+	private static final double[] EMPTY_DOUBLE_ARRAY = new double[] {};
+	
+	private DoubleProperty widthProperty;
+	private DoubleProperty heightProperty;
+	
+	public PolygonDrawable() {		
+		this(true,EMPTY_DOUBLE_ARRAY);
+	}
+
+	public PolygonDrawable(double... points) {
+		this(true,points);
+	}
+	
+	public PolygonDrawable(boolean flag ,double... points) {
+		super(points);
+		init(flag);
+	}
+
+	private void init(boolean flag) {
+		
+		//初始化widthProperty和heightProperty
+		initSizeProperties(flag);
+		
+	}
+	
+	private double[] computeExtreme(List<Double> points) {
+		boolean xFlag = true;
+		double minX = Double.MAX_VALUE, minY = Double.MAX_VALUE, maxX = Double.MIN_VALUE,maxY = Double.MIN_VALUE;
+		for(Double point : points) {
+			if(xFlag) {
+				if(point > maxX) {
+					maxX = point;
+				}
+				if(point < minX) {
+					minX =point;
+				}
+			} else {
+				if(point > maxY) {
+					maxY = point;
+				}
+				if(point < minY) {
+					minY =point;
+				}
+			}
+			xFlag = !xFlag;
+		}
+		return new double[] {minX,minY,maxX,maxY};
+	}
+	
+	private void moveTo(List<Double> points,double x,double y) {
+		boolean xFlag = true;
+		for(int i = 0 ; i < points.size() ;i ++) {
+			if(xFlag) {
+				points.set(i, points.get(i) + x);
+			} else {
+				points.set(i, points.get(i) + y);
+			}
+		}
+	}
+	
+	private void initSizeProperties(boolean flag) {
+		
+		double[] extreme = computeExtreme(getPoints());
+		double width = extreme[2] - extreme[0];
+		double height = extreme[3] - extreme[1];
+		
+		if(flag) {
+			//让其移动到(0,0)位置
+			moveTo(getPoints(), -extreme[0], -extreme[1]);
+		}
+		widthProperty = new PlannedDoubleProperty(PolygonDrawable.this, "width", width, new IPropertyPlan<Number>() {
+			@Override
+			public <E extends Property<Number>> void plan(E property, Number oldValue, Number newValue) {
+				if(oldValue.equals(newValue)) return;
+				ObservableList<Double> points = getPoints();
+				double scale = (double)newValue/(double)oldValue;
+				double size = points.size()/2;
+				
+				for(int i = 0 ; i < size ; i++) {
+					points.set(i*2,points.get(i*2)*scale);
+				}
+			}
+		});
+		
+		heightProperty = new PlannedDoubleProperty(PolygonDrawable.this, "height", height, new IPropertyPlan<Number>() {
+			@Override
+			public <E extends Property<Number>> void plan(E property, Number oldValue, Number newValue) {
+				if(oldValue.equals(newValue)) return;
+				ObservableList<Double> points = getPoints();
+				double scale = (double)newValue/(double)oldValue;
+				double size = points.size()/2;
+				for(int i = 0 ; i < size ; i++) {
+					points.set(i*2 + 1,points.get(i*2 + 1)*scale);
+				}
+			}
+		});
+		
+	}
+	
 	@Override
 	public DoubleProperty widthProperty() {
-		// TODO Auto-generated method stub
-		return null;
+		return widthProperty;
 	}
 
 	@Override
 	public DoubleProperty heightProperty() {
-		// TODO Auto-generated method stub
-		return null;
+		return heightProperty;
 	}
 
 	@Override
-	public Node getNode() {
+	public Polygon getNode() {
 		return this;
 	}
 

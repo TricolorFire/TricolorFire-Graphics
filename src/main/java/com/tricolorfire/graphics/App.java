@@ -1,12 +1,16 @@
 package com.tricolorfire.graphics;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Stack;
 
 import com.jfoenix.svg.SVGGlyph;
 import com.jfoenix.svg.SVGGlyphLoader;
 import com.tricolorfire.graphics.drawable.DrawableGroup;
+import com.tricolorfire.graphics.drawable.ShapeDrawableFactory;
 import com.tricolorfire.graphics.drawable.impl.EllipseDrawable;
+import com.tricolorfire.graphics.drawable.impl.PolygonDrawable;
 import com.tricolorfire.graphics.drawable.impl.RectangleDrawable;
 import com.tricolorfire.graphics.ui.StaffGauge;
 import com.tricolorfire.graphics.util.IPropertyPlan;
@@ -14,9 +18,11 @@ import com.tricolorfire.graphics.util.PlannedDoubleProperty;
 
 import javafx.application.Application;
 import javafx.beans.property.Property;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
@@ -83,6 +89,8 @@ public class App extends Application {
         
         //var scene = new Scene(new StackPane(flowPane), 640, 480);
         //StackPane sp;
+        
+        //////////////////////////////////////////////////////////////////////////
         Pane pane = new Pane();
         RectangleDrawable rect0 = new RectangleDrawable();
         rect0.setLocation(100, 100);
@@ -92,10 +100,15 @@ public class App extends Application {
         rect1.setLocation(50, 50);
         rect1.setSize(50, 50);
         
-        EllipseDrawable ellipse = new EllipseDrawable(30, 30, 30, 20);
+        Stack<Integer> st;
         
-        DrawableGroup dgroup = DrawableGroup.create(rect0,rect1,ellipse);
+        EllipseDrawable ellipse = ShapeDrawableFactory.createEllipseFromTopLeftCorner(0, 0, 10, 30);
         
+        PolygonDrawable polygon = new PolygonDrawable(120,160,80,80,150,120);
+        
+        DrawableGroup dgroup = DrawableGroup.create(rect0,rect1,ellipse,polygon);
+        //////////////////////////////////////////////////////////////////////////
+
         //dgroup.setWidth(100);
         //dgroup.setHeight(200);
         
@@ -118,6 +131,8 @@ public class App extends Application {
         dgroup.setFill(Color.BLUE);
         double width = pane.getWidth();
         double height = pane.getHeight();
+        
+        
         pane.setStyle("-fx-background-color:#000000");
         
         System.out.println("x:"+ x + " y:" + y);

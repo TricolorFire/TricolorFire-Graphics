@@ -5,7 +5,7 @@ import com.tricolorfire.graphics.drawable.DrawableType;
 import javafx.scene.Node;
 
 public interface IDrawable extends IBounds,IGraphics {
-
+	
 	//获得一个可以添加的节点
 	public Node getNode();
 

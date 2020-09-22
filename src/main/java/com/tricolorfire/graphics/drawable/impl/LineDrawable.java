@@ -9,15 +9,12 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.Node;
 import javafx.scene.shape.Line;
 
 public class LineDrawable extends Line implements IDrawable{
 
 	private DoubleProperty widthProperty;
 	private DoubleProperty heightProperty;
-	
-	
 	
 	public LineDrawable() {
 		this(0,0,0,0);
@@ -106,7 +103,7 @@ public class LineDrawable extends Line implements IDrawable{
 	}
 
 	@Override
-	public Node getNode() {
+	public Line getNode() {
 		return this;
 	}
 

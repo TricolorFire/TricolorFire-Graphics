@@ -9,7 +9,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.Node;
 import javafx.scene.shape.Ellipse;
 
 public class EllipseDrawable extends Ellipse implements IDrawable{
@@ -28,14 +27,6 @@ public class EllipseDrawable extends Ellipse implements IDrawable{
 	public EllipseDrawable(double centerX, double centerY, double radiusX, double radiusY) {
 		super(centerX,centerY, radiusX, radiusY);
 		initSizeProperty(radiusX,radiusY);
-	}
-
-	//从左上角创建一个椭圆
-	public static EllipseDrawable createFromTopLeftCorner(double x,double y,double radiusX, double radiusY) {
-		EllipseDrawable ellipse = new EllipseDrawable(radiusX,radiusY,radiusX,radiusY);
-		ellipse.setLayoutX(x);
-		ellipse.setLayoutY(y);
-		return ellipse;
 	}
 	
 	private void initSizeProperty(double radiusX, double radiusY) {
@@ -86,7 +77,7 @@ public class EllipseDrawable extends Ellipse implements IDrawable{
 	}
 
 	@Override
-	public Node getNode() {
+	public Ellipse getNode() {
 		return this;
 	}
 

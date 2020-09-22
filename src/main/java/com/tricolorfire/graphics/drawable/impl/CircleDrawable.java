@@ -10,7 +10,6 @@ import javafx.beans.property.Property;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -76,7 +75,7 @@ public class CircleDrawable extends Circle implements IDrawable{
 	}
 
 	@Override
-	public Node getNode() {
+	public Circle getNode() {
 		return this;
 	}
 

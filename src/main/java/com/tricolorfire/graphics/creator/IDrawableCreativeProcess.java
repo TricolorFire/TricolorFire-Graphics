@@ -57,7 +57,7 @@ public interface IDrawableCreativeProcess<T extends IDrawable> {
 	 * <br/>
 	 * <b>参数解释：</b> [当前通过该方法为临时层已置入的图像列表] [检测到输入的所有x坐标] [检测到输入的所有y坐标]
 	 * <br/>
-	 * <b>方法介绍：</b> 对该列表进行的任何操作都将同步影响到临时层 
+	 * <b>方法介绍：</b> 对context中的列表进行的任何操作都将同步影响到临时层 
 	 * <br/>
 	 * <b>返回说明：</b> 返回需要加入的节点,如果返回null则不向临时层中加入Drawable
 	 * <br/>

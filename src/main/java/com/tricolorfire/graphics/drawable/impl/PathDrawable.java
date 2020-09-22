@@ -4,25 +4,29 @@ import com.tricolorfire.graphics.drawable.DrawableType;
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
 
 import javafx.beans.property.DoubleProperty;
-import javafx.scene.Node;
 import javafx.scene.shape.Path;
 
 public class PathDrawable extends Path implements IDrawable{
 
+	private DoubleProperty widthProperty;
+	private DoubleProperty heightProperty;
+	
+	private void init() {
+		
+	}
+	
 	@Override
 	public DoubleProperty widthProperty() {
-		// TODO Auto-generated method stub
-		return null;
+		return widthProperty;
 	}
 
 	@Override
 	public DoubleProperty heightProperty() {
-		// TODO Auto-generated method stub
-		return null;
+		return heightProperty;
 	}
 
 	@Override
-	public Node getNode() {
+	public Path getNode() {
 		return this;
 	}
 

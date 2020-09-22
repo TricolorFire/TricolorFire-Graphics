@@ -4,7 +4,6 @@ import com.tricolorfire.graphics.drawable.DrawableType;
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
 
 import javafx.beans.property.DoubleProperty;
-import javafx.scene.Node;
 import javafx.scene.shape.Polyline;
 
 public class PolylineDrawable extends Polyline implements IDrawable{
@@ -22,7 +21,7 @@ public class PolylineDrawable extends Polyline implements IDrawable{
 	}
 
 	@Override
-	public Node getNode() {
+	public Polyline getNode() {
 		return this;
 	}
 
