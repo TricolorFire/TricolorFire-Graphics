@@ -35,6 +35,7 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 	private static final String BRUSH_PARAMETERS = "brush parameters";
 	
 	private ObservableList<IDrawable> drawableList;
+	private ObservableList<IDrawable> unmodifiableDrawableList;
 	
 	private ObjectProperty<BrushParameters> brushParametersProperty;//笔刷参数
 	private DoubleProperty widthProperty;
@@ -324,11 +325,12 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 			}
 			
 		});
+		
+		unmodifiableDrawableList = FXCollections.unmodifiableObservableList(drawableList);
 	}
 	
-	
-	protected ObservableList<IDrawable> getDrawableChildren() {
-		return drawableList;
+	public ObservableList<IDrawable> getDrawableChildrenUnmodifiable() {
+		return unmodifiableDrawableList;
 	}
 	
 //	/**
