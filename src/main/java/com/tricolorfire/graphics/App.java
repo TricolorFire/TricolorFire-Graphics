@@ -19,6 +19,7 @@ import com.tricolorfire.graphics.util.PlannedDoubleProperty;
 import javafx.application.Application;
 import javafx.beans.property.Property;
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -33,10 +34,12 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Paint;
 import javafx.scene.paint.Stop;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
+import javafx.scene.transform.Transform;
 import javafx.stage.Stage;
 
 
@@ -105,11 +108,13 @@ public class App extends Application {
         
         EllipseDrawable ellipse = ShapeDrawableFactory.createEllipseFromTopLeftCorner(120, 120, 10, 30);
         
+        //rect0.getTransforms().add(Transform.rotate(90, 50 , 100));
+        
         PolygonDrawable polygon = new PolygonDrawable(120,160,80,80,150,120);
         //polygon.setLayoutX(100);
         //polygon.setLayoutY(120);
         
-        DrawableGroup dgroup = DrawableGroup.create(polygon);
+        DrawableGroup dgroup = DrawableGroup.create(rect0);
         //////////////////////////////////////////////////////////////////////////
         dgroup.setFill(Color.BLUE);
         dgroup.setWidth(100);
@@ -118,7 +123,7 @@ public class App extends Application {
         Canvas canvas = new Canvas(200,200);
         dgroup.draw(canvas);
         
-        pane.getChildren().addAll(dgroup);
+        pane.getChildren().addAll(dgroup,new Circle(150,200,10));
         
         //pane.getChildren().addAll(rect0,rect1);
         //dgroup.autosize();

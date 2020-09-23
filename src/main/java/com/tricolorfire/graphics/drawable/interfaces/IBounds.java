@@ -59,6 +59,28 @@ public interface IBounds {
 		this.setHeight(height);
 	}
 	
+	//x平移
+	public DoubleProperty translateXProperty();
+	
+	default void setTranslateX(double tx) {
+		translateXProperty().set(tx);
+	}
+	
+	default double getTranslateX() {
+		return translateXProperty().get();
+	}
+	
+	//y平移
+	public DoubleProperty translateYProperty();
+	
+	default void setTranslateY(double ty) {
+		translateYProperty().set(ty);
+	}
+	
+	default double getTranslateY() {
+		return translateYProperty().get();
+	}
+	
 	//x缩放
 	public DoubleProperty scaleXProperty();
 	
