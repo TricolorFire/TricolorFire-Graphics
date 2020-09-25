@@ -108,7 +108,7 @@ public class App extends Application {
         
         EllipseDrawable ellipse = ShapeDrawableFactory.createEllipseFromTopLeftCorner(120, 120, 10, 30);
         
-        //rect0.getTransforms().add(Transform.rotate(90, 50 , 100));
+        rect0.getTransforms().add(Transform.rotate(90, 50 , 100));
         
         PolygonDrawable polygon = new PolygonDrawable(120,160,80,80,150,120);
         //polygon.setLayoutX(100);
@@ -116,6 +116,7 @@ public class App extends Application {
         
         DrawableGroup dgroup = DrawableGroup.create(rect0);
         //////////////////////////////////////////////////////////////////////////
+        
         dgroup.setFill(Color.BLUE);
         dgroup.setWidth(100);
         dgroup.setHeight(200);

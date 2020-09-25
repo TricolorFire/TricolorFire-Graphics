@@ -1,6 +1,8 @@
 package com.tricolorfire.graphics.drawable.interfaces;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.collections.ObservableList;
+import javafx.scene.transform.Transform;
 
 public interface IBounds {
 	
@@ -80,6 +82,9 @@ public interface IBounds {
 	default double getTranslateY() {
 		return translateYProperty().get();
 	}
+	
+	//变换
+	public ObservableList<Transform> getTransforms();
 	
 	//x缩放
 	public DoubleProperty scaleXProperty();
