@@ -947,28 +947,33 @@ public class Anchor {
 		return minWidthProperty;
 	}
 
-	public DoubleProperty xProperty() {
+	public DoubleProperty layoutXProperty() {
 		return xProperty;
 	}
 	
-	public DoubleProperty yProperty() {
+	public DoubleProperty layoutYProperty() {
 		return yProperty;
 	}
 	
-	public void setX(double x) {
+	public void setLayoutX(double x) {
 		xProperty.set(x);
 	}
 	
-	public double getX() {
+	public double getLayoutX() {
 		return xProperty.get();
 	}
 	
-	public void setY(double y) {
+	public void setLayoutY(double y) {
 		yProperty.set(y);
 	}
 	
-	public double getY() {
+	public double getLayoutY() {
 		return yProperty.get();
+	}
+	
+	public void setLocation(double x,double y) {
+		this.setLayoutX(x);
+		this.setLayoutY(y);
 	}
 	
 	public void setMinWidthProperty(double minWidth) {
