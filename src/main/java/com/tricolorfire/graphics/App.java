@@ -7,6 +7,7 @@ import java.util.Stack;
 
 import com.jfoenix.svg.SVGGlyph;
 import com.jfoenix.svg.SVGGlyphLoader;
+import com.tricolorfire.graphics.anchor.impl.DefaultControlPaneProvider;
 import com.tricolorfire.graphics.anchor.pane.RectangularDrawableControlPane;
 import com.tricolorfire.graphics.drawable.DrawableGroup;
 import com.tricolorfire.graphics.drawable.ShapeDrawableFactory;
@@ -128,10 +129,11 @@ public class App extends Application {
         //dgroup.draw(canvas);
         
         //ellipse.setFill(Color.RED);
-        RectangularDrawableControlPane pp = new RectangularDrawableControlPane(ellipse);
+        //RectangularDrawableControlPane pp = new RectangularDrawableControlPane(ellipse);
+        //pane.getOperationLayer().getChildren().addAll(pp.getRotateAnchorPane(),pp);
         
-        pane.getOperationLayer().getChildren().addAll(pp.getRotateAnchorPane(),pp);
-        
+        DefaultControlPaneProvider paneProvider = new DefaultControlPaneProvider();
+        paneProvider.provide(pane, ellipse);
         pane.getVectorLayer().getChildren().add(ellipse);
         
         //pane.getChildren().addAll(dgroup,new Circle(150,200,10));

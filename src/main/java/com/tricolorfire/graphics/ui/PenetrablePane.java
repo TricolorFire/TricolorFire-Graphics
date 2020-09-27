@@ -1,5 +1,7 @@
 package com.tricolorfire.graphics.ui;
 
+import com.tricolorfire.graphics.drawable.interfaces.IBounds;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
@@ -10,7 +12,7 @@ import javafx.scene.Parent;
  * PenetrablePane
  * 可穿透面板 : 鼠标监听可以穿透本面板，但本面板的组件依然可以监听鼠标行为
  */
-public class PenetrablePane extends Parent{
+public class PenetrablePane extends Parent implements IBounds{
 	
 	private static final double USE_COMPUTED_SIZE = -1;
 	
