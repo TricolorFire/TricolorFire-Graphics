@@ -1,6 +1,6 @@
 package com.tricolorfire.graphics.anchor;
 
-public enum AnchorPointDirection {
+public enum AnchorDirection {
 	NONE,
 	OMNIBEARING,
 	

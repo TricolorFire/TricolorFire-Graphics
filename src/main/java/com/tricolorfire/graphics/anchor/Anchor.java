@@ -25,7 +25,7 @@ import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
 
 //TODO 增加一套绑定器
-public class AnchorPoint {
+public class Anchor {
 	
 	public static final double DEFAULT_SIZE = 10;
 	public static final double DEFAULT_MIN_WIDTH = 1;
@@ -33,11 +33,11 @@ public class AnchorPoint {
 	
 	public static final ImageCursor ROTATECUR_CURSOR = 
 			new ImageCursor(
-					new Image(AnchorPoint.class.getResource("rotate_cursor.png").toExternalForm(),256,256,true,true),
+					new Image(Anchor.class.getResource("rotate_cursor.png").toExternalForm(),256,256,true,true),
 					128,128);
 	public static final ImageCursor ON_ROTATECUR_CURSOR = 
 			new ImageCursor(
-					new Image(AnchorPoint.class.getResource("on_rotate_cursor.png").toExternalForm(),256,256,true,true),
+					new Image(Anchor.class.getResource("on_rotate_cursor.png").toExternalForm(),256,256,true,true),
 					128,128);
 	
 	//控制区域
@@ -50,7 +50,7 @@ public class AnchorPoint {
 	
 	//点坐标
 	private DoubleProperty xProperty,yProperty;
-	private AnchorPointDirection direction;
+	private AnchorDirection direction;
 	
 	//点大小
 	private DoubleProperty sizeProperty;
@@ -61,12 +61,12 @@ public class AnchorPoint {
 	//点监听器
 	private EventHandler<MouseEvent> listener;
 	
-	public AnchorPoint(AnchorPointDirection direction) {
+	public Anchor(AnchorDirection direction) {
 		this.direction = direction;
 		init();
 	}
 	
-	public AnchorPoint(AnchorPointDirection direction,IBounds contralBounds) {
+	public Anchor(AnchorDirection direction,IBounds contralBounds) {
 		this.direction = direction;
 		this.contralBounds = contralBounds;
 		init();
@@ -113,7 +113,7 @@ public class AnchorPoint {
 			
 			@Override
 			public Object getBean() {
-				return AnchorPoint.this;
+				return Anchor.this;
 			}
 		};
 		
@@ -126,7 +126,7 @@ public class AnchorPoint {
 			
 			@Override
 			public Object getBean() {
-				return AnchorPoint.this;
+				return Anchor.this;
 			}
 		};
 		
@@ -139,7 +139,7 @@ public class AnchorPoint {
 			
 			@Override
 			public Object getBean() {
-				return AnchorPoint.this;
+				return Anchor.this;
 			}
 		};
 		
@@ -152,7 +152,7 @@ public class AnchorPoint {
 			
 			@Override
 			public Object getBean() {
-				return AnchorPoint.this;
+				return Anchor.this;
 			}
 		};
 		
@@ -165,7 +165,7 @@ public class AnchorPoint {
 			
 			@Override
 			public Object getBean() {
-				return AnchorPoint.this;
+				return Anchor.this;
 			}
 		};
 
@@ -178,7 +178,7 @@ public class AnchorPoint {
 			
 			@Override
 			public Object getBean() {
-				return AnchorPoint.this;
+				return Anchor.this;
 			}
 		};
 		
@@ -306,7 +306,7 @@ public class AnchorPoint {
 					double minWidth = minWidthProperty.doubleValue();
 					double minHeight = minHeightProperty.doubleValue();
 					
-					if(direction.equals(AnchorPointDirection.RIGHT_BOTTOM)) {
+					if(direction.equals(AnchorDirection.RIGHT_BOTTOM)) {
 						
 						////////
 						//右下//
@@ -344,7 +344,7 @@ public class AnchorPoint {
 						xProperty.set(x);
 						yProperty.set(y);
 						
-					} else if(direction.equals(AnchorPointDirection.RIGHT_TOP)){
+					} else if(direction.equals(AnchorDirection.RIGHT_TOP)){
 						
 						////////
 						//右上//
@@ -384,7 +384,7 @@ public class AnchorPoint {
 						//更新数据
 						xProperty.set(x);
 						yProperty.set(0);
-					} else if(direction.equals(AnchorPointDirection.LEFT_TOP)){
+					} else if(direction.equals(AnchorDirection.LEFT_TOP)){
 						
 						////////
 						//左上//
@@ -428,7 +428,7 @@ public class AnchorPoint {
 						xProperty.set(0);
 						yProperty.set(0);
 						
-					} else if(direction.equals(AnchorPointDirection.LEFT_BOTTOM)){
+					} else if(direction.equals(AnchorDirection.LEFT_BOTTOM)){
 
 						////////
 						//左下//
@@ -599,7 +599,7 @@ public class AnchorPoint {
 
 					double minHeight = minHeightProperty.doubleValue();
 					
-					if(direction.equals(AnchorPointDirection.BOTTOM)) {
+					if(direction.equals(AnchorDirection.BOTTOM)) {
 						
 						//判断长度是否可以受限制
 						if(limitLengthProperty.getValue()) {
@@ -620,7 +620,7 @@ public class AnchorPoint {
 						//更新数据
 						yProperty.set(y);
 						
-					} else if(direction.equals(AnchorPointDirection.TOP)) {
+					} else if(direction.equals(AnchorDirection.TOP)) {
 						dy += event.getY();
 						
 						//判断长度是否可以受限制
@@ -711,7 +711,7 @@ public class AnchorPoint {
 					
 					double minWidth = minWidthProperty.doubleValue();
 					
-					if(direction.equals(AnchorPointDirection.RIGHT)) {
+					if(direction.equals(AnchorDirection.RIGHT)) {
 						
 						//判断长度是否受限制
 						if(limitLengthProperty.getValue()) {
@@ -731,7 +731,7 @@ public class AnchorPoint {
 						
 						//更新数据
 						xProperty.set(x);
-					} else if(direction.equals(AnchorPointDirection.LEFT)) {
+					} else if(direction.equals(AnchorDirection.LEFT)) {
 						dx += event.getX();
 						
 						//判断长度是否受限制
@@ -810,7 +810,7 @@ public class AnchorPoint {
 	 *                  锚点鼠标样式随角度的改变               *
 	 *                                                      *
 	 ********************************************************/
-	private Cursor changeCursor(AnchorPointDirection direction,double tRotate) {
+	private Cursor changeCursor(AnchorDirection direction,double tRotate) {
 		Cursor cursor;
 		
 		double rotate = tRotate%360;
@@ -922,11 +922,11 @@ public class AnchorPoint {
 		this.shape = shape;
 	}
 	
-	public AnchorPointDirection getDirection() {
+	public AnchorDirection getDirection() {
 		return direction;
 	}
 
-	public void setDirection(AnchorPointDirection direction) {
+	public void setDirection(AnchorDirection direction) {
 		this.direction = direction;
 		updateShape();
 	}
