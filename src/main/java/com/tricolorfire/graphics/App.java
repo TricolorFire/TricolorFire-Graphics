@@ -58,13 +58,10 @@ public class App extends Application {
     	Shape shape = new Rectangle(0,0,200,200);
     	//判断是否包含该区域
     	boolean s = shape.boundsInLocalProperty().get().contains(0, 0, 30, 300);
-    	
+/*    	
     	//
     	Group group = new Group();
     	group.getChildren().add(shape);
-
-    	Color color;
-    	Paint paint;
     	
     	LinearGradient l = new LinearGradient(0, 0, 200, 200, false, CycleMethod.REPEAT,         
     			Collections.unmodifiableList(Arrays.asList(
@@ -86,7 +83,7 @@ public class App extends Application {
         
         FlowPane flowPane = new FlowPane();
         flowPane.getChildren().add(label);
-        
+*/        
         //flowPane.autosize();
         //label.autosize();
         //System.out.println(label.getWidth());
@@ -108,39 +105,19 @@ public class App extends Application {
         rect1.setLocation(50, 50);
         rect1.setSize(50, 50);
         
-        Stack<Integer> st;
         
         EllipseDrawable ellipse = ShapeDrawableFactory.createEllipseFromTopLeftCorner(120, 100, 10, 30);
         
+        //BUG
         //ellipse.getTransforms().add(Transform.rotate(90, 50 , 100));
-        
-        PolygonDrawable polygon = new PolygonDrawable(120,160,80,80,150,120);
-        //polygon.setLayoutX(100);
-        //polygon.setLayoutY(120);
-        
+        //PolygonDrawable polygon = new PolygonDrawable(120,160,80,80,150,120);
+
         DrawableGroup dgroup = DrawableGroup.create(rect0);
         //////////////////////////////////////////////////////////////////////////
-        /*
-        dgroup.setFill(Color.BLUE);
-        dgroup.setWidth(100);
-        dgroup.setHeight(200);
-        */
-        //Canvas canvas = new Canvas(200,200);
-        //dgroup.draw(canvas);
-        
-        //ellipse.setFill(Color.RED);
-        //RectangularDrawableControlPane pp = new RectangularDrawableControlPane(ellipse);
-        //pane.getOperationLayer().getChildren().addAll(pp.getRotateAnchorPane(),pp);
-        
+
         DefaultControlPaneProvider paneProvider = new DefaultControlPaneProvider();
         paneProvider.provide(pane, ellipse);
         pane.getVectorLayer().getChildren().add(ellipse);
-        
-        //pane.getChildren().addAll(dgroup,new Circle(150,200,10));
-        
-        //pane.getChildren().addAll(rect0,rect1);
-        //dgroup.autosize();
-        
         pane.autosize();
         
         double x = dgroup.getLayoutX();
@@ -160,7 +137,6 @@ public class App extends Application {
         
         System.out.println("x:"+ x + " y:" + y);
         System.out.println("width:" + width + " height:" + height);
-        
         System.out.println();
         
         BorderPane bpane = new BorderPane();

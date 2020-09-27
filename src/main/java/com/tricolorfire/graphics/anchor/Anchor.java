@@ -27,7 +27,7 @@ import javafx.scene.shape.StrokeType;
 //TODO 增加一套绑定器
 public class Anchor {
 	
-	public static final double DEFAULT_SIZE = 10;
+	public static final double DEFAULT_SIZE = 8;
 	public static final double DEFAULT_MIN_WIDTH = 1;
 	public static final double DEFAULT_MIN_HEIGHT = 1;
 	

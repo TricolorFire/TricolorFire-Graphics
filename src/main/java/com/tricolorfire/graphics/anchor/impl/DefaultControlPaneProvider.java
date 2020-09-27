@@ -11,7 +11,11 @@ public class DefaultControlPaneProvider implements IDrawableControlPaneProvider{
 	@Override
 	public void provide(LayerPane layerPane, IDrawable drawable) {
 		RectangularDrawableControlPane pane = new RectangularDrawableControlPane(drawable);
+		pane.adaptToNewScale(layerPane.scaleXProperty());
+		
 		RotateControlPane rpane = new RotateControlPane(drawable);
+		rpane.adaptToNewScale(layerPane.scaleXProperty());
+		
 		layerPane.getOperationLayer().getChildren().add(rpane);
 		layerPane.getOperationLayer().getChildren().add(pane);
 	}

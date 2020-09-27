@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.tricolorfire.graphics.anchor.Anchor;
 import com.tricolorfire.graphics.anchor.AnchorDirection;
+import com.tricolorfire.graphics.anchor.IScaleAdapter;
 import com.tricolorfire.graphics.drawable.interfaces.IBounds;
 import com.tricolorfire.graphics.ui.PenetrablePane;
 
@@ -19,7 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 
-public class RectangularDrawableControlPane extends PenetrablePane {
+public class RectangularDrawableControlPane extends PenetrablePane implements IScaleAdapter{
 	
 	public static final double ROTATE_POINT_DISTENCE = 30;
 	
@@ -217,8 +218,55 @@ public class RectangularDrawableControlPane extends PenetrablePane {
 		
 		//默认为不可视
 		//setVisible(false);
+		
+	}
 
-		//this.getChildren().add(0, rotateAnchorPane);
+	/********************************************************
+	 *                                                      *
+	 *                   自适应大小                    *
+	 *                                                      *
+	 ********************************************************/
+	
+	private ChangeListener<Number> scaleChangeListener ;
+	private DoubleProperty scaleAdapter;
+	
+	//设置适配器
+	public void adaptToNewScale(DoubleProperty scaleProperty) {
+		if(scaleChangeListener == null) {
+			scaleChangeListener = new ChangeListener<Number>() {
+				@Override
+				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+					updateScale();
+				}
+			};
+		}
+
+		if(this.scaleAdapter != null) {
+			this.scaleAdapter.removeListener(scaleChangeListener);
+		}
+		
+		this.scaleAdapter = scaleProperty;
+		this.scaleAdapter.addListener(scaleChangeListener);
+		
+		updateScale();
+
+	}
+	
+	//根据scale来自适应 锚点 及 边界线宽度
+	private void updateScale() {
+		
+		//获取比例数据
+		double scale = scaleAdapter.doubleValue();
+
+		//边界宽度自适应
+		double borderWidth = DEFAULT_BORDER_STROKE_WIDTH/scale;
+		borderStrokeWidthProperty.set(borderWidth);
+		
+		//锚点大小自适应
+		double size = DEFAULT_ANCHOR_SIZE/scale;
+		this.anchorSizeProperty.set(size);
+		this.anchorStrokeWidthProperty.set(1.0/scale);
+		
 	}
 	
 }
