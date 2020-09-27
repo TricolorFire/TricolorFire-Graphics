@@ -1,7 +1,7 @@
 package com.tricolorfire.graphics.creator;
 
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
-import com.tricolorfire.graphics.layer.Layer;
+import com.tricolorfire.graphics.layer.LayerPane;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -9,12 +9,20 @@ import javafx.scene.input.MouseEvent;
 public class DrawableCreator implements EventHandler<MouseEvent>{
 	//构造过程
 	private IDrawableCreativeProcess<IDrawable> process;
+	
+	//图层页面
+	private LayerPane layerPane;
+	
 	//
 	private DrawableCreatorContext context;
 	private boolean first = true;
 	
-	public DrawableCreator(Layer layer) {
-		context = new DrawableCreatorContext(layer);
+	public DrawableCreator(LayerPane layerPane) {
+		if(layerPane == null ) {
+			throw new NullPointerException();
+		}
+		this.layerPane = layerPane;
+		context = new DrawableCreatorContext(layerPane.getTemporaryDrawingLayer());
 	}
 	
 	@Override
@@ -62,5 +70,14 @@ public class DrawableCreator implements EventHandler<MouseEvent>{
 	//重置构造器
 	public void reset(){
 		first = true;
+	}
+
+	public LayerPane getLayerPane() {
+		return layerPane;
+	}
+
+	public void setLayerPane(LayerPane layerPane) {
+		this.layerPane = layerPane;
+		context = new DrawableCreatorContext(layerPane.getTemporaryDrawingLayer());
 	}
 }

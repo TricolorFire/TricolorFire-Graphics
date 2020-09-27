@@ -1,7 +1,7 @@
 package com.tricolorfire.graphics.anchor;
 
-import javafx.scene.layout.Pane;
+import com.tricolorfire.graphics.ui.PenetrablePane;
 
-public class DrawableControlPane extends Pane {
+public class DrawableControlPane extends PenetrablePane {
 	
 }
