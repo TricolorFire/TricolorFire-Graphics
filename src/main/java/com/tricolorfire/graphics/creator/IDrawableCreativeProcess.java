@@ -83,7 +83,7 @@ public interface IDrawableCreativeProcess<T extends IDrawable> {
 	}
 	
 	/**
-	 *  返回创建完成的图像
+	 *  TODO 返回创建完成的图像和控制器
 	 * @param context
 	 */
 	public T create(DrawableCreatorContext context);

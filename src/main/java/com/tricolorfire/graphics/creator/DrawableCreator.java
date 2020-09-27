@@ -48,7 +48,7 @@ public class DrawableCreator implements EventHandler<MouseEvent>{
 			//构造临时节点
 			process.tempCreate(context);
 			if(process.isCompleted(context)) {
-				//构建出drawable
+				//TODO 构建出drawable 返回创建完成的图像和控制器
 				IDrawable drawable = process.create(context);
 				//TODO 将drawable 置入矢量层
 				
