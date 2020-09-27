@@ -125,4 +125,56 @@ public interface IBounds {
 		return this.rotateProperty().get();
 	}
 	
+	//绑定
+	default void bindBounds(IBounds bounds){
+		this.layoutXProperty().bind(bounds.layoutXProperty());
+		this.layoutYProperty().bind(bounds.layoutYProperty());
+		this.widthProperty().bind(bounds.widthProperty());
+		this.heightProperty().bind(bounds.heightProperty());
+		this.translateXProperty().bind(bounds.translateXProperty());
+		this.translateYProperty().bind(bounds.translateYProperty());
+		this.scaleXProperty().bind(bounds.scaleXProperty());
+		this.scaleYProperty().bind(bounds.scaleYProperty());
+		this.rotateProperty().bind(bounds.rotateProperty());
+	}
+	
+	//解绑
+	default void unbindBounds(){
+		this.layoutXProperty().unbind();
+		this.layoutYProperty().unbind();
+		this.widthProperty().unbind();
+		this.heightProperty().unbind();
+		this.translateXProperty().unbind();
+		this.translateYProperty().unbind();
+		this.scaleXProperty().unbind();
+		this.scaleYProperty().unbind();
+		this.rotateProperty().unbind();
+	}
+	
+	//互相绑定
+	default void bindBidirectionalBounds(IBounds bounds){
+		this.layoutXProperty().bindBidirectional(bounds.layoutXProperty());
+		this.layoutYProperty().bindBidirectional(bounds.layoutYProperty());
+		this.widthProperty().bindBidirectional(bounds.widthProperty());
+		this.heightProperty().bindBidirectional(bounds.heightProperty());
+		this.translateXProperty().bindBidirectional(bounds.translateXProperty());
+		this.translateYProperty().bindBidirectional(bounds.translateYProperty());
+		this.scaleXProperty().bindBidirectional(bounds.scaleXProperty());
+		this.scaleYProperty().bindBidirectional(bounds.scaleYProperty());
+		this.rotateProperty().bindBidirectional(bounds.rotateProperty());
+	}
+	
+	//解除互相绑定
+	default void unbindBidirectionalBounds(IBounds bounds){
+		this.layoutXProperty().unbindBidirectional(bounds.layoutXProperty());
+		this.layoutYProperty().unbindBidirectional(bounds.layoutYProperty());
+		this.widthProperty().unbindBidirectional(bounds.widthProperty());
+		this.heightProperty().unbindBidirectional(bounds.heightProperty());
+		this.translateXProperty().unbindBidirectional(bounds.translateXProperty());
+		this.translateYProperty().unbindBidirectional(bounds.translateYProperty());
+		this.scaleXProperty().unbindBidirectional(bounds.scaleXProperty());
+		this.scaleYProperty().unbindBidirectional(bounds.scaleYProperty());
+		this.rotateProperty().unbindBidirectional(bounds.rotateProperty());
+	}
+	
 }

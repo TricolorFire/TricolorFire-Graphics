@@ -36,6 +36,8 @@ public class EllipseDrawable extends Ellipse implements IShapeDrawable{
 			public <E extends Property<Number>> void plan(E property, Number oldValue, Number newValue) {
 				if(!oldValue.equals(newValue)) {
 					radiusXProperty().set((double)newValue/2);
+					double cx = centerXProperty().get() ;
+					centerXProperty().set(cx + ((double)newValue - (double)oldValue)/2);
 				}
 			}
 		});
@@ -52,6 +54,8 @@ public class EllipseDrawable extends Ellipse implements IShapeDrawable{
 			public <E extends Property<Number>> void plan(E property, Number oldValue, Number newValue) {
 				if(!oldValue.equals(newValue)) {
 					radiusYProperty().set((double)newValue/2);
+					double cy = centerYProperty().get() ;
+					centerYProperty().set(cy + ((double)newValue - (double)oldValue)/2);
 				}
 			}
 		});

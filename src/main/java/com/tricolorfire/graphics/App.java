@@ -7,11 +7,14 @@ import java.util.Stack;
 
 import com.jfoenix.svg.SVGGlyph;
 import com.jfoenix.svg.SVGGlyphLoader;
+import com.tricolorfire.graphics.anchor.RectangularDrawableControlPane;
 import com.tricolorfire.graphics.drawable.DrawableGroup;
 import com.tricolorfire.graphics.drawable.ShapeDrawableFactory;
 import com.tricolorfire.graphics.drawable.impl.EllipseDrawable;
 import com.tricolorfire.graphics.drawable.impl.PolygonDrawable;
 import com.tricolorfire.graphics.drawable.impl.RectangleDrawable;
+import com.tricolorfire.graphics.layer.LayerPane;
+import com.tricolorfire.graphics.ui.PenetrablePane;
 import com.tricolorfire.graphics.ui.StaffGauge;
 import com.tricolorfire.graphics.util.IPropertyPlan;
 import com.tricolorfire.graphics.util.PlannedDoubleProperty;
@@ -95,9 +98,9 @@ public class App extends Application {
         //StackPane sp;
         
         //////////////////////////////////////////////////////////////////////////
-        Pane pane = new Pane();
+        LayerPane pane = new LayerPane();
         RectangleDrawable rect0 = new RectangleDrawable();
-        rect0.setLocation(100, 100);
+        rect0.setLocation(0, 0);
         rect0.setSize(100, 200);
         
         RectangleDrawable rect1 = new RectangleDrawable();
@@ -106,9 +109,9 @@ public class App extends Application {
         
         Stack<Integer> st;
         
-        EllipseDrawable ellipse = ShapeDrawableFactory.createEllipseFromTopLeftCorner(120, 120, 10, 30);
+        EllipseDrawable ellipse = ShapeDrawableFactory.createEllipseFromTopLeftCorner(120, 100, 10, 30);
         
-        rect0.getTransforms().add(Transform.rotate(90, 50 , 100));
+        //rect0.getTransforms().add(Transform.rotate(90, 50 , 100));
         
         PolygonDrawable polygon = new PolygonDrawable(120,160,80,80,150,120);
         //polygon.setLayoutX(100);
@@ -116,15 +119,20 @@ public class App extends Application {
         
         DrawableGroup dgroup = DrawableGroup.create(rect0);
         //////////////////////////////////////////////////////////////////////////
-        
+        /*
         dgroup.setFill(Color.BLUE);
         dgroup.setWidth(100);
         dgroup.setHeight(200);
+        */
+        //Canvas canvas = new Canvas(200,200);
+        //dgroup.draw(canvas);
         
-        Canvas canvas = new Canvas(200,200);
-        dgroup.draw(canvas);
+        //ellipse.setFill(Color.RED);
+        PenetrablePane pp = new RectangularDrawableControlPane(ellipse);
+        pane.getOperationLayer().getChildren().add(pp);
+        pane.getVectorLayer().getChildren().add(ellipse);
         
-        pane.getChildren().addAll(dgroup,new Circle(150,200,10));
+        //pane.getChildren().addAll(dgroup,new Circle(150,200,10));
         
         //pane.getChildren().addAll(rect0,rect1);
         //dgroup.autosize();
@@ -144,7 +152,7 @@ public class App extends Application {
         double height = pane.getHeight();
         
         
-        pane.setStyle("-fx-background-color:#000000");
+        //pane.setStyle("-fx-background-color:#000000");
         
         System.out.println("x:"+ x + " y:" + y);
         System.out.println("width:" + width + " height:" + height);

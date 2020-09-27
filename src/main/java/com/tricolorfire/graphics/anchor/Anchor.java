@@ -160,7 +160,7 @@ public class Anchor {
 			
 			@Override
 			public String getName() {
-				return "positionX";
+				return "layoutX";
 			}
 			
 			@Override
@@ -173,7 +173,7 @@ public class Anchor {
 			
 			@Override
 			public String getName() {
-				return "positionY";
+				return "layoutY";
 			}
 			
 			@Override

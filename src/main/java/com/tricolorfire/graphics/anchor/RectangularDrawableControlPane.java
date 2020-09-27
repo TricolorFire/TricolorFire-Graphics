@@ -9,6 +9,8 @@ import com.tricolorfire.graphics.ui.PenetrablePane;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.DoublePropertyBase;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.input.MouseEvent;
@@ -17,7 +19,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 
-public class RectangularDrawableControlPane extends PenetrablePane {
+public class RectangularDrawableControlPane extends PenetrablePane implements IBounds{
+	
+	public static final double DEFAULT_BORDER_STRPKE_WIDTH = 1.0;
+	public static final Paint DEFAULT_BORDER_STRPKE = Color.BLUE;
+	
+	public static final double DEFAULT_ANCHOR_SIZE = 6.0; 
+	public static final double DEFAULT_ANCHOR_STRPKE_WIDTH = 1.0;
 	
 	//主要控制区域
 	private IBounds contralBounds;
@@ -29,33 +37,45 @@ public class RectangularDrawableControlPane extends PenetrablePane {
 	private List<Anchor> anchors;
 	
 	//锚点方面设置
-	private DoubleProperty anchorSizeProperty;
-	private DoubleProperty anchorStrokeWidthProperty;
+	private DoubleProperty anchorSizeProperty = 
+			new SimpleDoubleProperty(this, "anchor size",DEFAULT_ANCHOR_SIZE);
+	private DoubleProperty anchorStrokeWidthProperty = 
+			new SimpleDoubleProperty(this, "anchor stroke width",DEFAULT_ANCHOR_STRPKE_WIDTH);
 	
 	//边框方面的设置
-	private DoubleProperty borderStrokeWidthProperty;
-	private ObjectProperty<Paint> borderStrokeFillProperty;
+	private DoubleProperty borderStrokeWidthProperty =
+			new SimpleDoubleProperty(this, "border stroke width",DEFAULT_BORDER_STRPKE_WIDTH);
+	private ObjectProperty<Paint> borderStrokeProperty = 
+			new SimpleObjectProperty<Paint>(this, "border stroke",DEFAULT_BORDER_STRPKE);
+	
+	public RectangularDrawableControlPane(IBounds contralBounds) {
+		this.contralBounds = contralBounds;
+		init();
+	}
 	
 	private void init() {
-		//contralBounds = new Region();
-		
 		//updateBind();
+		
+		this.bindBidirectionalBounds(contralBounds);
+
 		anchors = new ArrayList<Anchor>();
 		
 		ChangeListener<? super Number> topYListener = new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				//TODO 删掉似乎也没影响
 				((DoublePropertyBase)observable).set(0); //消除抖动
 			}
 		};
 
 		ChangeListener<? super Number> leftXListener = topYListener;
 		
-		double width = 0;//adjustableRegion.widthProperty().doubleValue();
-		double height = 0;//adjustableRegion.heightProperty().doubleValue();
+		double width = contralBounds.getWidth();
+		double height = contralBounds.getHeight();
 		
-		//initanchorSizeProperty();
-		//initanchorStrokeWidthProperty();
+		//TODO
+		System.out.println("width:" + width);
+		System.out.println("height:" + height);
 		
 		//上
 		Anchor top = new Anchor(AnchorDirection.TOP,contralBounds);
@@ -64,6 +84,7 @@ public class RectangularDrawableControlPane extends PenetrablePane {
 		top.layoutXProperty().bind(
 				this.widthProperty().divide(2));
 		top.layoutYProperty().addListener(topYListener);
+		
 		top.getShape().strokeWidthProperty().bind(anchorStrokeWidthProperty);
 		
 		//下
@@ -131,14 +152,12 @@ public class RectangularDrawableControlPane extends PenetrablePane {
 				this.heightProperty());
 		rightBottom.getShape().strokeWidthProperty().bind(anchorStrokeWidthProperty);
 		
-		///////////////
+		////////////////////
 		//关于连接线的设置//
-		///////////////
-		//initBorderStrokeWidthProperty();
-		//initBorderStrokeFillProperty();
+		////////////////////
 		
 		Line leftLine = new Line();
-		leftLine.strokeProperty().bind(borderStrokeFillProperty);
+		leftLine.strokeProperty().bind(borderStrokeProperty);
 		leftLine.strokeWidthProperty().bind(borderStrokeWidthProperty);
 		leftLine.startXProperty().bind(leftTop.layoutXProperty());
 		leftLine.startYProperty().bind(leftTop.layoutYProperty());
@@ -146,7 +165,7 @@ public class RectangularDrawableControlPane extends PenetrablePane {
 		leftLine.endYProperty().bind(leftBottom.layoutYProperty());
 		
 		Line rightLine = new Line();
-		rightLine.strokeProperty().bind(borderStrokeFillProperty);
+		rightLine.strokeProperty().bind(borderStrokeProperty);
 		rightLine.strokeWidthProperty().bind(borderStrokeWidthProperty);
 		rightLine.startXProperty().bind(rightTop.layoutXProperty());
 		rightLine.startYProperty().bind(rightTop.layoutYProperty());
@@ -154,7 +173,7 @@ public class RectangularDrawableControlPane extends PenetrablePane {
 		rightLine.endYProperty().bind(rightBottom.layoutYProperty());
 		
 		Line topLine = new Line();
-		topLine.strokeProperty().bind(borderStrokeFillProperty);
+		topLine.strokeProperty().bind(borderStrokeProperty);
 		topLine.strokeWidthProperty().bind(borderStrokeWidthProperty);
 		topLine.startXProperty().bind(leftTop.layoutXProperty());
 		topLine.startYProperty().bind(leftTop.layoutYProperty());
@@ -162,7 +181,7 @@ public class RectangularDrawableControlPane extends PenetrablePane {
 		topLine.endYProperty().bind(rightTop.layoutYProperty());
 		
 		Line bottomLine = new Line();
-		bottomLine.strokeProperty().bind(borderStrokeFillProperty);
+		bottomLine.strokeProperty().bind(borderStrokeProperty);
 		bottomLine.strokeWidthProperty().bind(borderStrokeWidthProperty);
 		bottomLine.startXProperty().bind(leftBottom.layoutXProperty());
 		bottomLine.startYProperty().bind(leftBottom.layoutYProperty());
@@ -197,9 +216,9 @@ public class RectangularDrawableControlPane extends PenetrablePane {
 		anchors.add(rightBottom);
 		
 		
-		///////////////
+		////////////////////
 		//关于旋转点的设置//
-		///////////////
+		////////////////////
 /*		
 		//旋转点
 		rotatePoint = new Anchor(AnchorDirection.ROTATE);
