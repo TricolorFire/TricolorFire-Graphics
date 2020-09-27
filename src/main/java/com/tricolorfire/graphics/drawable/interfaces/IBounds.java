@@ -1,6 +1,7 @@
 package com.tricolorfire.graphics.drawable.interfaces;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.transform.Transform;
 
@@ -136,6 +137,19 @@ public interface IBounds {
 		this.scaleXProperty().bind(bounds.scaleXProperty());
 		this.scaleYProperty().bind(bounds.scaleYProperty());
 		this.rotateProperty().bind(bounds.rotateProperty());
+		/*
+		getTransforms().clear();
+		getTransforms().addAll(bounds.getTransforms());
+		bounds.getTransforms().addListener(new ListChangeListener<Transform>() {
+			@Override
+			public void onChanged(Change<? extends Transform> c) {
+				while(c.next()) {
+					getTransforms().clear();
+					getTransforms().addAll(c.getList());
+				}
+			}
+		});
+		*/
 	}
 	
 	//解绑
@@ -162,6 +176,31 @@ public interface IBounds {
 		this.scaleXProperty().bindBidirectional(bounds.scaleXProperty());
 		this.scaleYProperty().bindBidirectional(bounds.scaleYProperty());
 		this.rotateProperty().bindBidirectional(bounds.rotateProperty());
+		/*
+		getTransforms().clear();
+		getTransforms().addAll(bounds.getTransforms());
+		bounds.getTransforms().addListener(new ListChangeListener<Transform>() {
+			@Override
+			public void onChanged(Change<? extends Transform> c) {
+				if(c.getList().equals(getTransforms())) return;
+				while(c.next()) {
+					getTransforms().clear();
+					getTransforms().addAll(c.getList());
+				}
+			}
+		});
+		
+		this.getTransforms().addListener(new ListChangeListener<Transform>() {
+			@Override
+			public void onChanged(Change<? extends Transform> c) {
+				if(c.getList().equals(getTransforms())) return;
+				while(c.next()) {
+					bounds.getTransforms().clear();
+					bounds.getTransforms().addAll(c.getList());
+				}
+			}
+		});
+		*/
 	}
 	
 	//解除互相绑定

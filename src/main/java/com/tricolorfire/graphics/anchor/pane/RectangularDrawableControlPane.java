@@ -1,9 +1,13 @@
-package com.tricolorfire.graphics.anchor;
+package com.tricolorfire.graphics.anchor.pane;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tricolorfire.graphics.anchor.Anchor;
+import com.tricolorfire.graphics.anchor.AnchorDirection;
+import com.tricolorfire.graphics.coordinate.CoordinateHelper;
 import com.tricolorfire.graphics.drawable.interfaces.IBounds;
+import com.tricolorfire.graphics.layer.LayerPane;
 import com.tricolorfire.graphics.ui.PenetrablePane;
 
 import javafx.beans.property.DoubleProperty;
@@ -13,13 +17,16 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 
 public class RectangularDrawableControlPane extends PenetrablePane implements IBounds{
+	
+	public static final double ROTATE_POINT_DISTENCE = 30;
 	
 	public static final double DEFAULT_BORDER_STRPKE_WIDTH = 1.0;
 	public static final Paint DEFAULT_BORDER_STRPKE = Color.BLUE;
@@ -32,6 +39,8 @@ public class RectangularDrawableControlPane extends PenetrablePane implements IB
 	
 	//旋转节点配置
 	private Anchor rotateAnchor;
+	private PenetrablePane rotateAnchorPane;
+	private EventHandler<MouseEvent> rotateListener;
 	
 	//拉伸节点
 	private List<Anchor> anchors;
@@ -54,7 +63,6 @@ public class RectangularDrawableControlPane extends PenetrablePane implements IB
 	}
 	
 	private void init() {
-		//updateBind();
 		
 		this.bindBidirectionalBounds(contralBounds);
 
@@ -219,46 +227,47 @@ public class RectangularDrawableControlPane extends PenetrablePane implements IB
 		////////////////////
 		//关于旋转点的设置//
 		////////////////////
-/*		
+		
 		//旋转点
-		rotatePoint = new Anchor(AnchorDirection.ROTATE);
-		rotatePoint.sizeProperty().bind(anchorSizeProperty);
-		rotatePoint.layoutXProperty().bind(this.prefWidthProperty().divide(2));
-		this.prefHeightProperty().addListener(new ChangeListener<Number>() {
+		rotateAnchor = new Anchor(AnchorDirection.ROTATE);
+		rotateAnchor.sizeProperty().bind(anchorSizeProperty);
+		rotateAnchor.layoutXProperty().bind(this.widthProperty().divide(2));
+		this.heightProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				double height = (double) newValue;
-				double distence = Math.abs(rotatePoint.layoutYProperty().get());
+				double distence = Math.abs(rotateAnchor.layoutYProperty().get());
 				if(height < 0) {
-					rotatePoint.layoutYProperty().set(distence);
+					rotateAnchor.layoutYProperty().set(distence);
 				} else {
-					rotatePoint.layoutYProperty().set(-distence);
+					rotateAnchor.layoutYProperty().set(-distence);
 				}
 			}
 		});
-		rotatePoint.layoutYProperty().set(-ROTATE_POINT_DISTENCE);
-		rotatePoint.getShape().setFill(Color.YELLOW);
-		rotatePoint.getShape().strokeWidthProperty().bind(anchorStrokeWidthProperty);
+		rotateAnchor.layoutYProperty().set(-ROTATE_POINT_DISTENCE);
+		rotateAnchor.getShape().setFill(Color.YELLOW);
+		rotateAnchor.getShape().strokeWidthProperty().bind(anchorStrokeWidthProperty);
 		
 		//初始化监听器
+		//TODO
 		initRotateListener();
-		rotatePoint.getShape().addEventFilter(MouseEvent.ANY,rotateListener);
+		rotateAnchor.getShape().addEventFilter(MouseEvent.ANY,rotateListener);
 		
 		Line rotateLine = new Line();
-		rotateLine.strokeProperty().bind(borderStrokeFillProperty);
+		rotateLine.strokeProperty().bind(borderStrokeProperty);
 		rotateLine.strokeWidthProperty().bind(borderStrokeWidthProperty);
 		
 		rotateLine.startXProperty().bind(top.layoutXProperty());
 		rotateLine.startYProperty().bind(top.layoutYProperty());	
-		rotateLine.endXProperty().bind(rotatePoint.layoutXProperty());
-		rotateLine.endYProperty().bind(rotatePoint.layoutYProperty());
+		rotateLine.endXProperty().bind(rotateAnchor.layoutXProperty());
+		rotateLine.endYProperty().bind(rotateAnchor.layoutYProperty());
 		
 		//左下虚拟点
 		Anchor virtualPointLB = new Anchor(AnchorDirection.LEFT_BOTTOM);
 		virtualPointLB.sizeProperty().bind(anchorSizeProperty);
 		virtualPointLB.layoutXProperty().bind(leftBottom.layoutXProperty());
 		virtualPointLB.layoutYProperty().bind(
-				leftBottom.layoutYProperty().add(rotatePoint.layoutYProperty().multiply(-1)));
+				leftBottom.layoutYProperty().add(rotateAnchor.layoutYProperty().multiply(-1)));
 		virtualPointLB.getShape().setOpacity(0d);
 		virtualPointLB.getShape().setMouseTransparent(true);
 		virtualPointLB.getShape().strokeWidthProperty().bind(anchorStrokeWidthProperty);
@@ -268,46 +277,115 @@ public class RectangularDrawableControlPane extends PenetrablePane implements IB
 		virtualPointRB.sizeProperty().bind(anchorSizeProperty);
 		virtualPointRB.layoutXProperty().bind(rightBottom.layoutXProperty());
 		virtualPointRB.layoutYProperty().bind(
-				rightBottom.layoutYProperty().add(rotatePoint.layoutYProperty().multiply(-1)));
+				rightBottom.layoutYProperty().add(rotateAnchor.layoutYProperty().multiply(-1)));
 		virtualPointRB.getShape().setOpacity(0d);
 		virtualPointRB.getShape().setMouseTransparent(true);
 		virtualPointRB.getShape().strokeWidthProperty().bind(anchorStrokeWidthProperty);
 		
 		//旋转点面板
-		rotatePointPane = new PenetrablePane();
+		rotateAnchorPane = new PenetrablePane();
 		
 		//位置绑定
-		rotatePointPane.layoutXProperty().bind(this.layoutXProperty());
-		rotatePointPane.layoutYProperty().bind(this.layoutYProperty());
+		rotateAnchorPane.layoutXProperty().bind(this.layoutXProperty());
+		rotateAnchorPane.layoutYProperty().bind(this.layoutYProperty());
 		
 		//位移绑定
-		rotatePointPane.translateXProperty().bindBidirectional(this.translateXProperty());
-		rotatePointPane.translateYProperty().bindBidirectional(this.translateYProperty());
+		rotateAnchorPane.translateXProperty().bindBidirectional(this.translateXProperty());
+		rotateAnchorPane.translateYProperty().bindBidirectional(this.translateYProperty());
 		
 		//缩放绑定
-		rotatePointPane.scaleXProperty().bindBidirectional(this.scaleXProperty());
-		rotatePointPane.scaleYProperty().bindBidirectional(this.scaleYProperty());
+		rotateAnchorPane.scaleXProperty().bindBidirectional(this.scaleXProperty());
+		rotateAnchorPane.scaleYProperty().bindBidirectional(this.scaleYProperty());
 		
 		//旋转绑定
-		rotatePointPane.rotateProperty().bind(this.rotateProperty());
+		rotateAnchorPane.rotateProperty().bind(this.rotateProperty());
 		
-		rotatePointPane.getChildren().addAll(
+		rotateAnchorPane.getChildren().addAll(
 				rotateLine,
-				
 				virtualPointLB.getShape(),
 				virtualPointRB.getShape(),
-				rotatePoint.getShape());
+				rotateAnchor.getShape());
 		
-		///////////////
+		////////////////////
 		//对图形添加监听器//
-		///////////////
-		addShapeAwakenListener();
-		addShapeMoveListener();
+		////////////////////
+		//addShapeAwakenListener();
+		//addShapeMoveListener();
 		
 		//默认为不可视
-		setVisible(false);
-		rotatePointPane.setVisible(false);
-*/
+		//setVisible(false);
+		//rotateAnchorPane.setVisible(false);
+
+		//this.getChildren().add(0, rotateAnchorPane);
 	}
 	
+	/********************************************************
+	 *                                                      *
+	 *                  旋转监听器                *
+	 *                                                      *
+	 ********************************************************/
+	private void initRotateListener() {
+		rotateListener = new EventHandler<MouseEvent>() {
+			
+			private Point2D dPonit;
+			private double dAngle;
+			Point2D centerPosition;
+			
+			@Override
+			public void handle(MouseEvent event) {
+				
+				if(event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
+					centerPosition = computeCenterPosition();
+					updateDate(centerPosition, event);
+				} else if(event.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {
+					
+					Point2D realPosition = 
+							computeRealPosition(centerPosition,event.getX(), event.getY());
+					Point2D innerPosition = realPosition.subtract(centerPosition);
+
+					double angle = innerPosition.angle(dPonit);
+					
+					//用于判断方向
+					if(angle != 0) {
+						
+						double x1 = innerPosition.getX();
+						double x2 = dPonit.getX();
+						double y1 = innerPosition.getY();
+						double y2 = dPonit.getY();
+						
+						double n = x1*y2 - x2*y1;
+						if(n > 0) {
+							angle *= -1;
+						}
+					}
+
+					RectangularDrawableControlPane.this.rotateProperty().set(angle + dAngle);
+				} else if(event.getEventType().equals(MouseEvent.MOUSE_RELEASED)) {
+					
+				}
+			}
+			
+			private void updateDate(Point2D centerPosition,MouseEvent event) {
+ 				Point2D realPosition = 
+ 						computeRealPosition(centerPosition,event.getX(), event.getY());
+				dPonit = realPosition.subtract(centerPosition);
+				dAngle = RectangularDrawableControlPane.this.rotateProperty().doubleValue();
+			}
+			
+			//计算node中心位置信息
+			private Point2D computeCenterPosition() {
+				return CoordinateHelper.computeCenterPosition(contralBounds);
+			}
+			
+			//计算实时位置
+			private Point2D computeRealPosition(Point2D center,double nowX,double nowY) {
+				return CoordinateHelper.computeRealPosition(center,Math.toRadians(getRotate()),nowX, nowY);
+			}
+		};
+		
+	}
+	
+	public PenetrablePane getRotateAnchorPane() {
+		return rotateAnchorPane;
+	}
 }

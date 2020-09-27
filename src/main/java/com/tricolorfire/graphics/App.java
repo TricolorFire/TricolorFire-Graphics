@@ -7,7 +7,7 @@ import java.util.Stack;
 
 import com.jfoenix.svg.SVGGlyph;
 import com.jfoenix.svg.SVGGlyphLoader;
-import com.tricolorfire.graphics.anchor.RectangularDrawableControlPane;
+import com.tricolorfire.graphics.anchor.pane.RectangularDrawableControlPane;
 import com.tricolorfire.graphics.drawable.DrawableGroup;
 import com.tricolorfire.graphics.drawable.ShapeDrawableFactory;
 import com.tricolorfire.graphics.drawable.impl.EllipseDrawable;
@@ -111,7 +111,7 @@ public class App extends Application {
         
         EllipseDrawable ellipse = ShapeDrawableFactory.createEllipseFromTopLeftCorner(120, 100, 10, 30);
         
-        //rect0.getTransforms().add(Transform.rotate(90, 50 , 100));
+        //ellipse.getTransforms().add(Transform.rotate(90, 50 , 100));
         
         PolygonDrawable polygon = new PolygonDrawable(120,160,80,80,150,120);
         //polygon.setLayoutX(100);
@@ -128,8 +128,10 @@ public class App extends Application {
         //dgroup.draw(canvas);
         
         //ellipse.setFill(Color.RED);
-        PenetrablePane pp = new RectangularDrawableControlPane(ellipse);
-        pane.getOperationLayer().getChildren().add(pp);
+        RectangularDrawableControlPane pp = new RectangularDrawableControlPane(ellipse);
+        
+        pane.getOperationLayer().getChildren().addAll(pp.getRotateAnchorPane(),pp);
+        
         pane.getVectorLayer().getChildren().add(ellipse);
         
         //pane.getChildren().addAll(dgroup,new Circle(150,200,10));
