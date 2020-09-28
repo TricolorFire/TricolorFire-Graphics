@@ -3,8 +3,6 @@ package com.tricolorfire.graphics.anchor;
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
 import com.tricolorfire.graphics.layer.LayerPane;
 
-import javafx.scene.Node;
-
 public interface IDrawableControlPaneProvider {
 	
 	/**
@@ -21,6 +19,6 @@ public interface IDrawableControlPaneProvider {
 	 * @param drawable
 	 * @return
 	 */
-	public Node createControlPanes(LayerPane layerPane,IDrawable drawable) ;
+	public IDrawableControllor createControlPanes(LayerPane layerPane,IDrawable drawable) ;
 	
 }
