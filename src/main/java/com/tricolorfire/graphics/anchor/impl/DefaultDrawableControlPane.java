@@ -12,8 +12,16 @@ public class DefaultDrawableControlPane extends AbstractDrawableControlPane impl
 	
 	private PenetrablePane pane;
 	
-	public DefaultDrawableControlPane(LayerPane layerPane, IDrawable drawable) {
-		
+	public DefaultDrawableControlPane(LayerPane layerPane, IDrawable drawable ,IDrawable tmpDrawable) {
+		super(layerPane,drawable);
+		if(tmpDrawable == null) {
+			pane = createPane(layerPane, drawable);
+		} else {
+			pane = createPane(layerPane, tmpDrawable);
+		}
+	}
+
+	protected PenetrablePane createPane(LayerPane layerPane , IDrawable drawable) {
 		//矩形区域控制
 		RectangularDrawableControlPane rectControl = new RectangularDrawableControlPane(drawable);
 		rectControl.adaptToNewScale(layerPane.scaleXProperty());
@@ -23,14 +31,15 @@ public class DefaultDrawableControlPane extends AbstractDrawableControlPane impl
 		rotateControl.adaptToNewScale(layerPane.scaleXProperty());
 		
 		//控制面板
-		pane = new PenetrablePane(); 
-		pane.getChildren().addAll(rotateControl,rectControl);
+		PenetrablePane mainPane = new PenetrablePane(); 
+		mainPane.getChildren().addAll(rotateControl,rectControl);
 		
+		return mainPane;		
 	}
-
+	
 	@Override
 	public PenetrablePane getPane() {
 		return this.pane;
 	}
-
+	
 }

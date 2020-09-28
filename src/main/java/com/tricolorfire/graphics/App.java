@@ -118,9 +118,10 @@ public class App extends Application {
         DrawableGroup dgroup = DrawableGroup.create(rect0,ellipse);
         //////////////////////////////////////////////////////////////////////////
 
+        
         DefaultControlPaneProvider paneProvider = new DefaultControlPaneProvider();
         
-        IDrawableControlPane controllor = paneProvider.createControlPanes(pane, dgroup);
+        IDrawableControlPane controllor = paneProvider.createControlPanes(pane, dgroup , null);
         
         pane.getOperationLayer().getChildren().add(controllor.getPane());
         pane.getVectorLayer().getChildren().add(dgroup);

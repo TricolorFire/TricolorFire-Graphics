@@ -5,11 +5,11 @@ import com.tricolorfire.graphics.anchor.interfaces.IDrawableControlPaneProvider;
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
 import com.tricolorfire.graphics.layer.LayerPane;
 
-public class DefaultControlPaneProvider implements IDrawableControlPaneProvider{
+public class DefaultControlPaneProvider implements IDrawableControlPaneProvider {
 
 	@Override
-	public IDrawableControlPane createControlPanes(LayerPane layerPane, IDrawable drawable) {
-		return new DefaultDrawableControlPane(layerPane, drawable);
+	public IDrawableControlPane createControlPanes(LayerPane layerPane, IDrawable drawable , IDrawable tmpDrawable) {
+		return new DefaultDrawableControlPane(layerPane, drawable, tmpDrawable);
 	}
 
 	@Override
