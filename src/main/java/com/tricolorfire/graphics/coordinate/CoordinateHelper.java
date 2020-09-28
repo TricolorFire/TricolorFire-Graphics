@@ -46,9 +46,11 @@ public class CoordinateHelper {
 			final double nowX,
 			final double nowY) {
 		
-		Point2D tcenter = center;
-		if(tcenter == null) {
+		Point2D tcenter;
+		if(center == null) {
 			tcenter = Point2D.ZERO;
+		} else {
+			tcenter = new Point2D(center.getX(),center.getY());
 		}
 		
 		//计算正弦、余弦
