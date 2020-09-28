@@ -1,8 +1,11 @@
-package com.tricolorfire.graphics.anchor;
+package com.tricolorfire.graphics.anchor.interfaces;
 
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
 import com.tricolorfire.graphics.layer.LayerPane;
 
+/**
+ * 控制面板提供器
+ */
 public interface IDrawableControlPaneProvider {
 	
 	/**

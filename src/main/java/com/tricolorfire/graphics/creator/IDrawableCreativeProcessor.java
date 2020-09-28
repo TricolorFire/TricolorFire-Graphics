@@ -16,7 +16,7 @@ import javafx.scene.Node;
  *                                   |___________________|_________________________________|
  * 
  */
-public interface IDrawableCreativeProcess<T extends IDrawable> {
+public interface IDrawableCreativeProcessor<T extends IDrawable> {
 	
 	/**
 	 * 默认跟随画笔参数

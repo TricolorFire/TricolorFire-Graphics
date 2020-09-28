@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.tricolorfire.graphics.anchor.Anchor;
 import com.tricolorfire.graphics.anchor.AnchorDirection;
-import com.tricolorfire.graphics.anchor.IScaleAdapter;
+import com.tricolorfire.graphics.anchor.interfaces.IScaleAdapter;
 import com.tricolorfire.graphics.drawable.interfaces.IBounds;
 import com.tricolorfire.graphics.ui.PenetrablePane;
 

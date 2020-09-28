@@ -1,7 +1,7 @@
 package com.tricolorfire.graphics.anchor.impl;
 
-import com.tricolorfire.graphics.anchor.IDrawableControlPaneProvider;
-import com.tricolorfire.graphics.anchor.IDrawableControlPane;
+import com.tricolorfire.graphics.anchor.interfaces.IDrawableControlPane;
+import com.tricolorfire.graphics.anchor.interfaces.IDrawableControlPaneProvider;
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
 import com.tricolorfire.graphics.layer.LayerPane;
 

@@ -8,8 +8,8 @@ import java.util.Stack;
 
 import com.jfoenix.svg.SVGGlyph;
 import com.jfoenix.svg.SVGGlyphLoader;
-import com.tricolorfire.graphics.anchor.IDrawableControlPane;
 import com.tricolorfire.graphics.anchor.impl.DefaultControlPaneProvider;
+import com.tricolorfire.graphics.anchor.interfaces.IDrawableControlPane;
 import com.tricolorfire.graphics.anchor.pane.RectangularDrawableControlPane;
 import com.tricolorfire.graphics.drawable.DrawableGroup;
 import com.tricolorfire.graphics.drawable.ShapeDrawableFactory;

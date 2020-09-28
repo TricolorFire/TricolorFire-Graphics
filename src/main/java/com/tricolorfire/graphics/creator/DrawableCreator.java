@@ -8,7 +8,7 @@ import javafx.scene.input.MouseEvent;
 
 public class DrawableCreator implements EventHandler<MouseEvent>{
 	//构造过程
-	private IDrawableCreativeProcess<IDrawable> process;
+	private IDrawableCreativeProcessor<IDrawable> processor;
 	
 	//图层页面
 	private LayerPane layerPane;
@@ -34,7 +34,7 @@ public class DrawableCreator implements EventHandler<MouseEvent>{
 		
 		//第一次点击
 		if(first && event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
-			process.initTempCreate(context);
+			processor.initTempCreate(context);
 			first = false;
 		} else if (event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
 			//
@@ -44,9 +44,9 @@ public class DrawableCreator implements EventHandler<MouseEvent>{
 			//
 			
 		} else if(event.getEventType().equals(MouseEvent.MOUSE_MOVED)) {
-			process.move(context);
+			processor.move(context);
 		} else if(event.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {
-			process.drag(context);
+			processor.drag(context);
 		}  else if(event.getEventType().equals(MouseEvent.MOUSE_RELEASED)) {
 			
 			//记录数据
@@ -54,10 +54,10 @@ public class DrawableCreator implements EventHandler<MouseEvent>{
 			context.yPoints().add(event.getY());
 			
 			//构造临时节点
-			process.tempCreate(context);
-			if(process.isCompleted(context)) {
+			processor.tempCreate(context);
+			if(processor.isCompleted(context)) {
 				//TODO 构建出drawable 返回创建完成的图像和控制器
-				IDrawable drawable = process.create(context);
+				IDrawable drawable = processor.create(context);
 				//TODO 将drawable 置入矢量层
 				
 				//清所有临时节点

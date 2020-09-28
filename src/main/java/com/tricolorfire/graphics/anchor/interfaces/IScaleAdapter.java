@@ -1,4 +1,4 @@
-package com.tricolorfire.graphics.anchor;
+package com.tricolorfire.graphics.anchor.interfaces;
 
 import javafx.beans.property.DoubleProperty;
 
