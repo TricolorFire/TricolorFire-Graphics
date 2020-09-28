@@ -1,15 +1,15 @@
 package com.tricolorfire.graphics.anchor.impl;
 
 import com.tricolorfire.graphics.anchor.IDrawableControlPaneProvider;
-import com.tricolorfire.graphics.anchor.IDrawableControllor;
+import com.tricolorfire.graphics.anchor.IDrawableControlPane;
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
 import com.tricolorfire.graphics.layer.LayerPane;
 
 public class DefaultControlPaneProvider implements IDrawableControlPaneProvider{
 
 	@Override
-	public IDrawableControllor createControlPanes(LayerPane layerPane, IDrawable drawable) {
-		return new DefaultDrawableController(layerPane, drawable);
+	public IDrawableControlPane createControlPanes(LayerPane layerPane, IDrawable drawable) {
+		return new DefaultDrawableControlPane(layerPane, drawable);
 	}
 
 	@Override

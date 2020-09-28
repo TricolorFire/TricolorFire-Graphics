@@ -19,6 +19,6 @@ public interface IDrawableControlPaneProvider {
 	 * @param drawable
 	 * @return
 	 */
-	public IDrawableControllor createControlPanes(LayerPane layerPane,IDrawable drawable) ;
+	public IDrawableControlPane createControlPanes(LayerPane layerPane,IDrawable drawable) ;
 	
 }

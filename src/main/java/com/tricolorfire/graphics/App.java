@@ -8,6 +8,7 @@ import java.util.Stack;
 
 import com.jfoenix.svg.SVGGlyph;
 import com.jfoenix.svg.SVGGlyphLoader;
+import com.tricolorfire.graphics.anchor.IDrawableControlPane;
 import com.tricolorfire.graphics.anchor.impl.DefaultControlPaneProvider;
 import com.tricolorfire.graphics.anchor.pane.RectangularDrawableControlPane;
 import com.tricolorfire.graphics.drawable.DrawableGroup;
@@ -119,9 +120,9 @@ public class App extends Application {
 
         DefaultControlPaneProvider paneProvider = new DefaultControlPaneProvider();
         
-        Node node = paneProvider.createControlPanes(pane, dgroup);
+        IDrawableControlPane controllor = paneProvider.createControlPanes(pane, dgroup);
         
-        pane.getOperationLayer().getChildren().add(node);
+        pane.getOperationLayer().getChildren().add(controllor.getPane());
         pane.getVectorLayer().getChildren().add(dgroup);
         
         pane.autosize();
