@@ -392,5 +392,21 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 	public DrawableType getType() {
 		return DrawableType.GROUP;
 	}
+
+	//copy函数
+	@Override
+	public DrawableGroup copy() {
+		int size = drawableList.size();
+		double dx = getLayoutX();
+		double dy = getLayoutY();
+		
+		IDrawable[] drawables = new IDrawable[size];
+		for(int i = 0 ; i < size ; i++) {
+			drawables[i] = drawableList.get(i).copy();
+			drawables[i].setLayoutX(dx + drawables[i].getLayoutX());
+			drawables[i].setLayoutY(dy + drawables[i].getLayoutY());
+		}
+		return create(drawables);
+	}
 	
 }

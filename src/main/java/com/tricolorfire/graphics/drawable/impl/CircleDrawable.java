@@ -82,4 +82,12 @@ public class CircleDrawable extends Circle implements IShapeDrawable {
 		return this;
 	}
 
+	@Override
+	public CircleDrawable copy() {
+		CircleDrawable drawable = new CircleDrawable();
+		this.loadBoundsInfoTo(drawable);
+		this.loadGraphicsInfoTo(drawable);
+		return drawable;
+	}
+
 }

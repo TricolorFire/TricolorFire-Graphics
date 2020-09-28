@@ -25,4 +25,11 @@ public class PathDrawable extends Path  implements IShapeDrawable{
 		return this;
 	}
 
+	@Override
+	public PathDrawable copy() {
+		PathDrawable drawable = new PathDrawable();
+		this.loadBoundsInfoTo(drawable);
+		this.loadGraphicsInfoTo(drawable);
+		return drawable;
+	}
 }

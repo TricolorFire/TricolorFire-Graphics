@@ -105,5 +105,13 @@ public class LineDrawable extends Line  implements IShapeDrawable{
 	public Line getNode() {
 		return this;
 	}
+	
+	@Override
+	public LineDrawable copy() {
+		LineDrawable drawable = new LineDrawable();
+		this.loadBoundsInfoTo(drawable);
+		this.loadGraphicsInfoTo(drawable);
+		return drawable;
+	}
 
 }

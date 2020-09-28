@@ -20,6 +20,9 @@ public interface IDrawable extends IBounds,IGraphics {
 	//获得Drawable类型
 	public DrawableType getType();
 	
+	//获得一个拷贝
+	public IDrawable copy();
+	
 	//绘制成栅格图
 	default void draw(Canvas canvas) {
 		GraphicsContext gc = canvas.getGraphicsContext2D();

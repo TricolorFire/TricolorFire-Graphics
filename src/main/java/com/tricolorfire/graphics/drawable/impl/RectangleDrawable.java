@@ -28,5 +28,12 @@ public class RectangleDrawable extends Rectangle implements IShapeDrawable {
 	public Rectangle getNode() {
 		return this;
 	}
-
+	
+	@Override
+	public RectangleDrawable copy() {
+		RectangleDrawable drawable = new RectangleDrawable();
+		this.loadBoundsInfoTo(drawable);
+		this.loadGraphicsInfoTo(drawable);
+		return drawable;
+	}
 }

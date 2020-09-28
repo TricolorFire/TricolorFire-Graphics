@@ -1,5 +1,7 @@
 package com.tricolorfire.graphics.anchor.interfaces;
 
+import java.util.Set;
+
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
 import com.tricolorfire.graphics.layer.LayerPane;
 import com.tricolorfire.graphics.ui.PenetrablePane;
@@ -11,21 +13,27 @@ public interface IDrawableControlPane {
 	
 	public PenetrablePane getPane();
 	
-	public void setAdjustmentProcessor(IAdjustmentProcessor processor);
+	public void addAdjustmentProcessor(IAdjustmentProcessor processor);
 	
-	public IAdjustmentProcessor getAdjustmentProcessor();
+	public Set<IAdjustmentProcessor> getAdjustmentProcessors();
+	
+	public boolean removeAdjustmentProcessor(IAdjustmentProcessor processor);
 	
 	public void clearAdjustmentProcessor();
 	
 	static class HandlerMaker {
-		public static EventHandler<MouseEvent> make(IAdjustmentProcessor processor,LayerPane layerPane, IDrawable drawable) {
+		public static EventHandler<MouseEvent> make(
+				IAdjustmentProcessor processor,
+				LayerPane layerPane, 
+				IDrawable drawable,
+				IDrawable tmpDrawable) {
 			EventHandler<MouseEvent> handler = new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
 					if(event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
-						processor.start(layerPane,drawable);
+						processor.start(layerPane,drawable,tmpDrawable);
 					} else if (event.getEventType().equals(MouseEvent.MOUSE_RELEASED)) {
-						processor.finished(layerPane,drawable);
+						processor.finished(layerPane,drawable,tmpDrawable);
 					}
 				}
 			};

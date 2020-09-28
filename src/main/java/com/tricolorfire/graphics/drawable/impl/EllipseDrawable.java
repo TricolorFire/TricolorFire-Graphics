@@ -84,4 +84,11 @@ public class EllipseDrawable extends Ellipse implements IShapeDrawable{
 		return this;
 	}
 
+	@Override
+	public EllipseDrawable copy() {
+		EllipseDrawable drawable = new EllipseDrawable();
+		this.loadBoundsInfoTo(drawable);
+		this.loadGraphicsInfoTo(drawable);
+		return drawable;
+	}
 }

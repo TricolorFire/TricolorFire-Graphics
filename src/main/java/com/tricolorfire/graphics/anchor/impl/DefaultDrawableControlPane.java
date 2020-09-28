@@ -10,17 +10,11 @@ import com.tricolorfire.graphics.ui.PenetrablePane;
 
 public class DefaultDrawableControlPane extends AbstractDrawableControlPane implements IDrawableControlPane{
 	
-	private PenetrablePane pane;
-	
 	public DefaultDrawableControlPane(LayerPane layerPane, IDrawable drawable ,IDrawable tmpDrawable) {
-		super(layerPane,drawable);
-		if(tmpDrawable == null) {
-			pane = createPane(layerPane, drawable);
-		} else {
-			pane = createPane(layerPane, tmpDrawable);
-		}
+		super(layerPane,drawable,tmpDrawable);
 	}
 
+	@Override
 	protected PenetrablePane createPane(LayerPane layerPane , IDrawable drawable) {
 		//矩形区域控制
 		RectangularDrawableControlPane rectControl = new RectangularDrawableControlPane(drawable);
@@ -35,11 +29,6 @@ public class DefaultDrawableControlPane extends AbstractDrawableControlPane impl
 		mainPane.getChildren().addAll(rotateControl,rectControl);
 		
 		return mainPane;		
-	}
-	
-	@Override
-	public PenetrablePane getPane() {
-		return this.pane;
 	}
 	
 }

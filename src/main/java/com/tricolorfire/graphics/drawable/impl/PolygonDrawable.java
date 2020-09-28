@@ -126,4 +126,18 @@ public class PolygonDrawable extends Polygon  implements IShapeDrawable {
 		return this;
 	}
 
+	@Override
+	public PolygonDrawable copy() {
+		List<Double> points = getPoints();
+		int size = getPoints().size();
+		double[] pointsCopy = new double[size];
+		for(int i = 0 ; i < size ; i++) {
+			pointsCopy[i] = points.get(i);
+		}
+		
+		PolygonDrawable drawable = new PolygonDrawable(pointsCopy);
+		this.loadBoundsInfoTo(drawable);
+		this.loadGraphicsInfoTo(drawable);
+		return drawable;
+	}
 }

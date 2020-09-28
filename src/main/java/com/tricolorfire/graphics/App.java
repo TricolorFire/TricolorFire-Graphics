@@ -113,23 +113,30 @@ public class App extends Application {
         
         //BUG
         //ellipse.getTransforms().add(Transform.rotate(90, 50 , 100));
-        //PolygonDrawable polygon = new PolygonDrawable(120,160,80,80,150,120);
+        PolygonDrawable polygon = new PolygonDrawable(120,160,80,80,150,120);
 
-        DrawableGroup dgroup = DrawableGroup.create(rect0,ellipse);
+        DrawableGroup dgroup = DrawableGroup.create(rect0,ellipse,polygon);
         //////////////////////////////////////////////////////////////////////////
 
+        dgroup.setFill(Color.BLUE);
         
         DefaultControlPaneProvider paneProvider = new DefaultControlPaneProvider();
         
-        IDrawableControlPane controllor = paneProvider.createControlPanes(pane, dgroup , null);
+        DrawableGroup dgroupCopy = dgroup.copy();
+        dgroupCopy.setOpacity(0.5);
         
+        IDrawableControlPane controllor = paneProvider.createControlPanes(pane, dgroup , dgroupCopy);
+        
+        //层次放置
         pane.getOperationLayer().getChildren().add(controllor.getPane());
+        pane.getTemporaryDrawingLayer().getChildren().add(dgroupCopy);
         pane.getVectorLayer().getChildren().add(dgroup);
         
         pane.autosize();
+        /////////////////////////////////////////////////////////////////////////
         
-        double x = dgroup.getLayoutX();
-        double y = dgroup.getLayoutY();
+//        double x = dgroup.getLayoutX();
+//        double y = dgroup.getLayoutY();
         
         //double width = dgroup.getWidth();
         //double height = dgroup.getHeight();
@@ -137,15 +144,15 @@ public class App extends Application {
         //System.out.println("x:"+ x + " y:" + y);
         //System.out.println("width:" + width + " height:" + height);
 
-        double width = pane.getWidth();
-        double height = pane.getHeight();
-        
-        
-        //pane.setStyle("-fx-background-color:#000000");
-        
-        System.out.println("x:"+ x + " y:" + y);
-        System.out.println("width:" + width + " height:" + height);
-        System.out.println();
+//        double width = pane.getWidth();
+//        double height = pane.getHeight();
+//        
+//        
+//        //pane.setStyle("-fx-background-color:#000000");
+//        
+//        System.out.println("x:"+ x + " y:" + y);
+//        System.out.println("width:" + width + " height:" + height);
+//        System.out.println();
         
         BorderPane bpane = new BorderPane();
         StaffGauge staffGauge = new StaffGauge();

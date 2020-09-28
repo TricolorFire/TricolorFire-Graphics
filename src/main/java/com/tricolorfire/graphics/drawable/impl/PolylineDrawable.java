@@ -123,4 +123,18 @@ public class PolylineDrawable extends Polyline  implements IShapeDrawable{
 		return this;
 	}
 
+	@Override
+	public PolylineDrawable copy() {
+		List<Double> points = getPoints();
+		int size = getPoints().size();
+		double[] pointsCopy = new double[size];
+		for(int i = 0 ; i < size ; i++) {
+			pointsCopy[i] = points.get(i);
+		}
+		
+		PolylineDrawable drawable = new PolylineDrawable(pointsCopy);
+		this.loadBoundsInfoTo(drawable);
+		this.loadGraphicsInfoTo(drawable);
+		return drawable;
+	}
 }
