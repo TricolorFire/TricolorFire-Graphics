@@ -57,11 +57,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-    	
+    	/*     	
     	Shape shape = new Rectangle(0,0,200,200);
     	//判断是否包含该区域
     	boolean s = shape.boundsInLocalProperty().get().contains(0, 0, 30, 300);
-/*    	
+   	
     	//
     	Group group = new Group();
     	group.getChildren().add(shape);
@@ -111,21 +111,27 @@ public class App extends Application {
         
         EllipseDrawable ellipse = ShapeDrawableFactory.createEllipseFromTopLeftCorner(120, 100, 10, 30);
         
+        PolygonDrawable polygon = new PolygonDrawable(120,160,80,80,150,120);
+        
         //BUG
         //ellipse.getTransforms().add(Transform.rotate(90, 50 , 100));
-        PolygonDrawable polygon = new PolygonDrawable(120,160,80,80,150,120);
-
+        
         DrawableGroup dgroup = DrawableGroup.create(rect0,ellipse,polygon);
+        dgroup.setFill(Color.BLUE);
         //////////////////////////////////////////////////////////////////////////
 
-        dgroup.setFill(Color.BLUE);
-        
+        //控制面板提供器
         DefaultControlPaneProvider paneProvider = new DefaultControlPaneProvider();
         
+        //获取临时dgroup
         DrawableGroup dgroupCopy = dgroup.copy();
         dgroupCopy.setOpacity(0.5);
         
-        IDrawableControlPane controllor = paneProvider.createControlPanes(pane, dgroup , dgroupCopy);
+        //获取控制面板
+        IDrawableControlPane controllor = null;
+        if(paneProvider.accept(pane, dgroup)) {
+        	controllor = paneProvider.createControlPanes(pane,dgroup,dgroupCopy);	
+        }
         
         //层次放置
         pane.getOperationLayer().getChildren().add(controllor.getPane());
