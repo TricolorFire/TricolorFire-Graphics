@@ -3,6 +3,7 @@ package com.tricolorfire.graphics;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 import com.jfoenix.svg.SVGGlyph;
@@ -25,6 +26,7 @@ import javafx.beans.property.Property;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
@@ -98,7 +100,7 @@ public class App extends Application {
         //////////////////////////////////////////////////////////////////////////
         LayerPane pane = new LayerPane();
         RectangleDrawable rect0 = new RectangleDrawable();
-        rect0.setLocation(0, 0);
+        rect0.setLocation(20, 20);
         rect0.setSize(100, 200);
         
         RectangleDrawable rect1 = new RectangleDrawable();
@@ -112,12 +114,16 @@ public class App extends Application {
         //ellipse.getTransforms().add(Transform.rotate(90, 50 , 100));
         //PolygonDrawable polygon = new PolygonDrawable(120,160,80,80,150,120);
 
-        DrawableGroup dgroup = DrawableGroup.create(rect0);
+        DrawableGroup dgroup = DrawableGroup.create(rect0,ellipse);
         //////////////////////////////////////////////////////////////////////////
 
         DefaultControlPaneProvider paneProvider = new DefaultControlPaneProvider();
-        paneProvider.createControlPanes(pane, ellipse);
-        pane.getVectorLayer().getChildren().add(ellipse);
+        
+        Node node = paneProvider.createControlPanes(pane, dgroup);
+        
+        pane.getOperationLayer().getChildren().add(node);
+        pane.getVectorLayer().getChildren().add(dgroup);
+        
         pane.autosize();
         
         double x = dgroup.getLayoutX();

@@ -1,28 +1,29 @@
 package com.tricolorfire.graphics.anchor.impl;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.tricolorfire.graphics.anchor.IDrawableControlPaneProvider;
 import com.tricolorfire.graphics.anchor.pane.RectangularDrawableControlPane;
 import com.tricolorfire.graphics.anchor.pane.RotateControlPane;
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
 import com.tricolorfire.graphics.layer.LayerPane;
+import com.tricolorfire.graphics.ui.PenetrablePane;
 
 import javafx.scene.Node;
 
 public class DefaultControlPaneProvider implements IDrawableControlPaneProvider{
 
 	@Override
-	public List<Node> createControlPanes(LayerPane layerPane, IDrawable drawable) {
+	public Node createControlPanes(LayerPane layerPane, IDrawable drawable) {
 		
-		RectangularDrawableControlPane pane = new RectangularDrawableControlPane(drawable);
-		pane.adaptToNewScale(layerPane.scaleXProperty());
+		RectangularDrawableControlPane rectControl = new RectangularDrawableControlPane(drawable);
+		rectControl.adaptToNewScale(layerPane.scaleXProperty());
 		
-		RotateControlPane rpane = new RotateControlPane(drawable);
-		rpane.adaptToNewScale(layerPane.scaleXProperty());
+		RotateControlPane rotateControl = new RotateControlPane(drawable);
+		rotateControl.adaptToNewScale(layerPane.scaleXProperty());
 		
-		return Arrays.asList(rpane,pane);
+		PenetrablePane pane = new PenetrablePane(); 
+		pane.getChildren().addAll(rotateControl,rectControl);
+		
+		return pane;
 	}
 
 	@Override

@@ -1,7 +1,5 @@
 package com.tricolorfire.graphics.anchor;
 
-import java.util.List;
-
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
 import com.tricolorfire.graphics.layer.LayerPane;
 
@@ -23,6 +21,6 @@ public interface IDrawableControlPaneProvider {
 	 * @param drawable
 	 * @return
 	 */
-	public List<Node> createControlPanes(LayerPane layerPane,IDrawable drawable) ;
+	public Node createControlPanes(LayerPane layerPane,IDrawable drawable) ;
 	
 }

@@ -83,10 +83,12 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 			@Override
 			public <E extends Property<Number>> void plan(E property, Number oldValue, Number newValue) {
 				//按照比例对内部的drawable进行扩大和缩小啊
-				double scale = (double)oldValue/(double)newValue;
-				double tw;
+				double scale = (double)newValue/(double)oldValue;
+				double tx,tw;
 				for(IDrawable drawable : drawableList) {
 					tw = drawable.getWidth();
+					tx = drawable.getLayoutX();
+					drawable.setLayoutX(tx*scale);
 					drawable.setWidth(tw*scale);
 				}
 				autosize();
@@ -99,10 +101,12 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 			@Override
 			public <E extends Property<Number>> void plan(E property, Number oldValue, Number newValue) {
 				//按照比例对内部的drawable进行扩大和缩小啊
-				double scale = (double)oldValue/(double)newValue;
-				double th;
+				double scale = (double)newValue/(double)oldValue;
+				double ty,th;
 				for(IDrawable drawable : drawableList) {
 					th = drawable.getHeight();
+					ty = drawable.getLayoutY();
+					drawable.setLayoutY(ty*scale);
 					drawable.setHeight(th*scale);
 				}
 				autosize();
