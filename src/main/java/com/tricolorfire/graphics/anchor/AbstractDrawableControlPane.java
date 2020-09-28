@@ -5,7 +5,6 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
 
-import com.tricolorfire.graphics.anchor.AbstractDrawableControlPane.DefaultAdjustmentProcessor;
 import com.tricolorfire.graphics.anchor.interfaces.IAdjustmentProcessor;
 import com.tricolorfire.graphics.anchor.interfaces.IDrawableControlPane;
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
