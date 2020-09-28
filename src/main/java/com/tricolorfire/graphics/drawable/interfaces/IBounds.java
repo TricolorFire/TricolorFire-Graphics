@@ -1,7 +1,6 @@
 package com.tricolorfire.graphics.drawable.interfaces;
 
 import javafx.beans.property.DoubleProperty;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.transform.Transform;
 
@@ -124,6 +123,19 @@ public interface IBounds {
 	
 	default double getRotate() {
 		return this.rotateProperty().get();
+	}
+	
+	//将限制信息加载给另一个IBounds
+	default void loadBoundsInfoTo(IBounds bounds){
+		bounds.setLayoutX(this.getLayoutX());
+		bounds.setLayoutY(this.getLayoutY());
+		bounds.setWidth(this.getWidth());
+		bounds.setHeight(this.getHeight());
+		bounds.setTranslateX(this.getTranslateX());
+		bounds.setTranslateY(this.getTranslateY());
+		bounds.setScaleX(this.getScaleX());
+		bounds.setScaleY(this.getScaleY());
+		bounds.setRotate(this.getRotate());
 	}
 	
 	//绑定

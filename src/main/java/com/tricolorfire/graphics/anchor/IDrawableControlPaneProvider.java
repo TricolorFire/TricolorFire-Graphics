@@ -1,10 +1,28 @@
 package com.tricolorfire.graphics.anchor;
 
+import java.util.List;
+
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
 import com.tricolorfire.graphics.layer.LayerPane;
 
+import javafx.scene.Node;
+
 public interface IDrawableControlPaneProvider {
 	
-	public void provide(LayerPane layerPane,IDrawable drawable) ;
+	/**
+	 * 判断该类型的drawable是否可以由该提供器提供
+	 * @param operationLayer
+	 * @param drawable
+	 * @return
+	 */
+	public boolean accept(LayerPane layerPane,IDrawable drawable) ;
+	
+	/**
+	 * 创建一个控制面板
+	 * @param operationLayer
+	 * @param drawable
+	 * @return
+	 */
+	public List<Node> createControlPanes(LayerPane layerPane,IDrawable drawable) ;
 	
 }

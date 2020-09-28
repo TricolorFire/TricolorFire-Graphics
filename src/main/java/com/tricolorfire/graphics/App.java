@@ -116,7 +116,7 @@ public class App extends Application {
         //////////////////////////////////////////////////////////////////////////
 
         DefaultControlPaneProvider paneProvider = new DefaultControlPaneProvider();
-        paneProvider.provide(pane, ellipse);
+        paneProvider.createControlPanes(pane, ellipse);
         pane.getVectorLayer().getChildren().add(ellipse);
         pane.autosize();
         
