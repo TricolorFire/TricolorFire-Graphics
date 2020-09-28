@@ -90,11 +90,14 @@ public abstract class AbstractDrawableControlPane implements IDrawableControlPan
 	//处理器
 	class DefaultAdjustmentProcessor implements IAdjustmentProcessor{
 		@Override
-		public void start(LayerPane layerPane, IDrawable drawable, IDrawable tmpDrawable) {}
+		public void start(LayerPane layerPane, IDrawable drawable, IDrawable tmpDrawable) {
+			tmpDrawable.getNode().setVisible(true);
+		}
 		
 		@Override
 		public void finished(LayerPane layerPane, IDrawable drawable, IDrawable tmpDrawable) {
 			tmpDrawable.loadBoundsInfoTo(drawable);
+			tmpDrawable.getNode().setVisible(false);
 		}
 	}
 	

@@ -41,12 +41,12 @@ public class DefaultDrawableControlPane extends AbstractDrawableControlPane impl
 		mainPane.getChildren().addAll(rotateControl,rectControl);
 		
 		//drawable 添加移动控制监听器
-		addShapeMoveListener();
+		//addShapeMoveListener();
 		
 		return mainPane;		
 	}
 	
-	//为drawable的图形添加移动监听器
+	/*//为drawable的图形添加移动监听器
 	private EventHandler<MouseEvent> shapeMoveListener;
 	private void addShapeMoveListener() {
 		Node node = drawable.getNode();
@@ -98,4 +98,5 @@ public class DefaultDrawableControlPane extends AbstractDrawableControlPane impl
 		
 		node.addEventHandler(MouseEvent.ANY, shapeMoveListener);
 	}
+	*/
 }
