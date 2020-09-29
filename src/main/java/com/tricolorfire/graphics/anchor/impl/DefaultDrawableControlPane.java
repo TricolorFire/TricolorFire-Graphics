@@ -12,6 +12,8 @@ import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
 import com.tricolorfire.graphics.layer.LayerPane;
 import com.tricolorfire.graphics.ui.PenetrablePane;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
@@ -22,6 +24,10 @@ public class DefaultDrawableControlPane extends AbstractDrawableControlPane impl
 	
 	public DefaultDrawableControlPane(LayerPane layerPane, IDrawable drawable) {
 		super(layerPane,drawable);
+	}
+	
+	public DefaultDrawableControlPane(LayerPane layerPane, IDrawable drawable,boolean a) {
+		super(layerPane,drawable,a);
 	}
 
 	@Override
@@ -39,22 +45,44 @@ public class DefaultDrawableControlPane extends AbstractDrawableControlPane impl
 		PenetrablePane mainPane = new PenetrablePane(); 
 		mainPane.getChildren().addAll(rotateControl,rectControl);
 		
-		//drawable 添加移动控制监听器
-		addShapeMoveListener(layerPane,drawable,tmpDrawable);
+		mainPane.parentProperty().addListener(new ChangeListener<Node>() {
+			private Node record ;
+			@Override
+			public void changed(ObservableValue<? extends Node> observable, Node oldValue, Node newValue) {
+				//如果该面板被移除
+				if(newValue == null) {
+					if(shapeMoveListener != null) {
+						drawable.getNode().removeEventHandler(MouseEvent.ANY, shapeMoveListener);
+						drawable.getNode().setCursor(orginCursor);
+					}
+					return;
+				}
+				
+				//如果该面板被添加到一个新的面板中
+				if(oldValue == null) {
+					//检查是否与之前的面板一致
+					if(record == newValue || record == null) {
+						//drawable 添加移动控制监听器
+						addShapeMoveListener(layerPane,drawable,tmpDrawable);
+					}
+				}
+			}
+		});
 		
-		return mainPane;		
+		return mainPane;
 	}
 	
 	private EventHandler<MouseEvent> shapeMoveListener;
-	
+	private Cursor orginCursor ;
 	public EventHandler<MouseEvent> getShapeMoveListener(){
 		return shapeMoveListener;
 	}
 	
 	//为drawable的图形添加移动监听器
 	private void addShapeMoveListener(LayerPane layerPane , IDrawable drawable , IDrawable tmpDrawable) {
-		Node node = drawable.getNode();
-		node.setCursor(Cursor.MOVE);
+		
+		orginCursor = drawable.getNode().getCursor();
+		drawable.getNode().setCursor(Cursor.MOVE);
 		
 		shapeMoveListener = new EventHandler<MouseEvent>() {
 			
@@ -115,7 +143,7 @@ public class DefaultDrawableControlPane extends AbstractDrawableControlPane impl
 			
 		};
 		
-		node.addEventHandler(MouseEvent.ANY, shapeMoveListener);
+		drawable.getNode().addEventHandler(MouseEvent.ANY, shapeMoveListener);
 	}
 	
 }

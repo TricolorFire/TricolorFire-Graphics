@@ -26,11 +26,17 @@ public abstract class AbstractDrawableControlPane implements IDrawableControlPan
 	private LayerPane layerPane;
 	
 	private IAdjustmentProcessor defaultAdjustmentProcessor;
+	private boolean defaultControlPaneVisiableWhenInAdjusting;
 	
 	protected AbstractDrawableControlPane(LayerPane layerPane, IDrawable drawable) {
-		//获取drawable
+		this(layerPane,drawable,true);
+	}
+	
+	protected AbstractDrawableControlPane(LayerPane layerPane, IDrawable drawable , boolean adjusting) {
+		//全局数据设置
 		this.layerPane = layerPane;
 		this.drawable = drawable;
+		this.defaultControlPaneVisiableWhenInAdjusting = adjusting;
 		
 		//创造一个临时drawbale
 		this.tmpDrawable = drawable.copy();
@@ -106,19 +112,25 @@ public abstract class AbstractDrawableControlPane implements IDrawableControlPan
 		Map<Node,Boolean> record = new Hashtable<>();
 		@Override
 		public void start(LayerPane layerPane, IDrawable drawable) {
-			for(Node node: pane.getChildren()) {
-				record.put(node, node.isVisible());
-				node.setVisible(false);
+			
+			if(!defaultControlPaneVisiableWhenInAdjusting) {
+				for(Node node: pane.getChildren()) {
+					record.put(node, node.isVisible());
+					node.setVisible(false);
+				}
 			}
+			
 			tmpDrawable.getNode().setVisible(true);
 		}
 		
 		@Override
 		public void finished(LayerPane layerPane, IDrawable drawable) {
-			tmpDrawable.loadBoundsInfoTo(drawable);
-			for(Node node: pane.getChildren()) {
-				node.setVisible(record.get(node));
+			if(!defaultControlPaneVisiableWhenInAdjusting) {
+				for(Node node: pane.getChildren()) {
+					node.setVisible(record.get(node));
+				}
 			}
+			tmpDrawable.loadBoundsInfoTo(drawable);
 			tmpDrawable.getNode().setVisible(false);
 		}
 	}

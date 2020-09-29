@@ -135,6 +135,7 @@ public class App extends Application {
         
         //层次放置
         pane.getOperationLayer().getChildren().add(controllor.getPane());
+        //pane.getOperationLayer().getChildren().remove(0);
         pane.getVectorLayer().getChildren().add(dgroup);
         
         pane.autosize();
