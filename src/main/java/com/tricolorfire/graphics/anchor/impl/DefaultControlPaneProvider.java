@@ -8,8 +8,8 @@ import com.tricolorfire.graphics.layer.LayerPane;
 public class DefaultControlPaneProvider implements IDrawableControlPaneProvider {
 
 	@Override
-	public IDrawableControlPane createControlPanes(LayerPane layerPane, IDrawable drawable , IDrawable tmpDrawable) {
-		return new DefaultDrawableControlPane(layerPane, drawable, tmpDrawable);
+	public IDrawableControlPane createControlPanes(LayerPane layerPane, IDrawable drawable) {
+		return new DefaultDrawableControlPane(layerPane, drawable);
 	}
 
 	@Override

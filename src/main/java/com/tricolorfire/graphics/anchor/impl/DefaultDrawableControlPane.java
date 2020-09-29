@@ -19,8 +19,8 @@ public class DefaultDrawableControlPane extends AbstractDrawableControlPane impl
 	
 	private IDrawable drawable;
 	
-	public DefaultDrawableControlPane(LayerPane layerPane, IDrawable drawable ,IDrawable tmpDrawable) {
-		super(layerPane,drawable,tmpDrawable);
+	public DefaultDrawableControlPane(LayerPane layerPane, IDrawable drawable) {
+		super(layerPane,drawable);
 	}
 
 	@Override

@@ -130,12 +130,11 @@ public class App extends Application {
         //获取控制面板
         IDrawableControlPane controllor = null;
         if(paneProvider.accept(pane, dgroup)) {
-        	controllor = paneProvider.createControlPanes(pane,dgroup,dgroupCopy);	
+        	controllor = paneProvider.createControlPanes(pane,dgroup);	
         }
         
         //层次放置
         pane.getOperationLayer().getChildren().add(controllor.getPane());
-        pane.getTemporaryDrawingLayer().getChildren().add(dgroupCopy);
         pane.getVectorLayer().getChildren().add(dgroup);
         
         pane.autosize();

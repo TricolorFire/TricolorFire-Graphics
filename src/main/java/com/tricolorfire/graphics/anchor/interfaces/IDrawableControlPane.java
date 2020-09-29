@@ -31,9 +31,9 @@ public interface IDrawableControlPane {
 				@Override
 				public void handle(MouseEvent event) {
 					if(event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
-						processor.start(layerPane,drawable,tmpDrawable);
+						processor.start(layerPane,drawable);
 					} else if (event.getEventType().equals(MouseEvent.MOUSE_RELEASED)) {
-						processor.finished(layerPane,drawable,tmpDrawable);
+						processor.finished(layerPane,drawable);
 					}
 				}
 			};

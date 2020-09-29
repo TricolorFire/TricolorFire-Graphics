@@ -24,21 +24,25 @@ public abstract class AbstractDrawableControlPane implements IDrawableControlPan
 	private IDrawable tmpDrawable;
 	private LayerPane layerPane;
 	
-	protected AbstractDrawableControlPane(LayerPane layerPane, IDrawable drawable,IDrawable tmpDrawable) {
+	protected AbstractDrawableControlPane(LayerPane layerPane, IDrawable drawable) {
+		//获取drawable
 		this.layerPane = layerPane;
 		this.drawable = drawable;
-		this.tmpDrawable = tmpDrawable;
 		
+		//创造一个临时drawbale
+		this.tmpDrawable = drawable.copy();
+		this.tmpDrawable.getNode().setOpacity(0.5f);
+		this.tmpDrawable.getNode().setMouseTransparent(true);
+		
+		//创建监听器
 		processorMap = new Hashtable<>();
-		//如果没有临时Drawable就直接构造控制其本体的控制面板
-		//否则直接构造临时Drawable的控制面板
-		if(tmpDrawable == null) {
-			pane = createPane(layerPane, drawable);
-		} else {
-			pane = createPane(layerPane, tmpDrawable);
-			//添加默认适配器
-			addAdjustmentProcessor(new DefaultAdjustmentProcessor());
-		}
+		pane = createPane(layerPane, tmpDrawable);
+		
+		//将临时drawbale加入其中
+		pane.getChildren().add(0,tmpDrawable.getNode());
+		
+		//添加默认适配器
+		addAdjustmentProcessor(new DefaultAdjustmentProcessor());
 	}
 	
 	protected abstract PenetrablePane createPane(LayerPane layerPane , IDrawable drawable);
@@ -90,12 +94,12 @@ public abstract class AbstractDrawableControlPane implements IDrawableControlPan
 	//处理器
 	class DefaultAdjustmentProcessor implements IAdjustmentProcessor{
 		@Override
-		public void start(LayerPane layerPane, IDrawable drawable, IDrawable tmpDrawable) {
+		public void start(LayerPane layerPane, IDrawable drawable) {
 			tmpDrawable.getNode().setVisible(true);
 		}
 		
 		@Override
-		public void finished(LayerPane layerPane, IDrawable drawable, IDrawable tmpDrawable) {
+		public void finished(LayerPane layerPane, IDrawable drawable) {
 			tmpDrawable.loadBoundsInfoTo(drawable);
 			tmpDrawable.getNode().setVisible(false);
 		}
