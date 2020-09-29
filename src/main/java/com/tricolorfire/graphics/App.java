@@ -161,10 +161,13 @@ public class App extends Application {
 //        System.out.println();
         
         BorderPane bpane = new BorderPane();
+        
+        bpane.setCenter(pane);
+        
         StaffGauge staffGauge = new StaffGauge();
         staffGauge.setPrefHeight(20);
         bpane.setTop(staffGauge);
-        bpane.setCenter(pane);
+        
         var scene = new Scene(bpane, 640, 480);
 
         stage.setScene(scene);

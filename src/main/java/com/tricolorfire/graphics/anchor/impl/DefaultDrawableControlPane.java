@@ -18,6 +18,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 public class DefaultDrawableControlPane extends AbstractDrawableControlPane implements IDrawableControlPane{
@@ -93,6 +94,11 @@ public class DefaultDrawableControlPane extends AbstractDrawableControlPane impl
 				
 				Point2D center = CoordinateHelper.computeCenterPosition(drawable);
 				Set<IAdjustmentProcessor> processors = getAdjustmentProcessors();
+				
+				//如果不是左键，直接忽视
+				if(!event.getButton().equals(MouseButton.PRIMARY)) {
+					return;
+				}
 				
  				if(event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
  					//开始调整
