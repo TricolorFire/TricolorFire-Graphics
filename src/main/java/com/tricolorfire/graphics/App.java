@@ -26,6 +26,7 @@ import javafx.application.Application;
 import javafx.beans.property.Property;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -123,18 +124,32 @@ public class App extends Application {
         //控制面板提供器
         DefaultControlPaneProvider paneProvider = new DefaultControlPaneProvider();
         
-        //获取临时dgroup
-        DrawableGroup dgroupCopy = dgroup.copy();
-        dgroupCopy.setOpacity(0.5);
-        
         //获取控制面板
+        /*
         IDrawableControlPane controllor = null;
         if(paneProvider.accept(pane, dgroup)) {
         	controllor = paneProvider.createControlPanes(pane,dgroup);	
         }
+        */
+        dgroup.setCursor(Cursor.MOVE);
+        dgroup.addEventHandler(MouseEvent.MOUSE_PRESSED,new EventHandler<MouseEvent>() {
+        	//需要一个统一的管理器
+        	//ControlPaneProviderManager
+        	DefaultControlPaneProvider paneProvider = new DefaultControlPaneProvider();
+        	@Override
+        	public void handle(MouseEvent event) {
+                /*
+        		IDrawableControlPane controllor = null;
+                if(paneProvider.accept(pane, dgroup)) {
+                	controllor = paneProvider.createControlPanes(pane,dgroup);	
+                }
+        		pane.getOperationLayer().getChildren().add(controllor.getPane());
+        		*/
+        	}
+		});
         
         //层次放置
-        pane.getOperationLayer().getChildren().add(controllor.getPane());
+        //pane.getOperationLayer().getChildren().add(controllor.getPane());
         pane.getVectorLayer().addDrawable(dgroup);
         pane.autosize();
         /////////////////////////////////////////////////////////////////////////
