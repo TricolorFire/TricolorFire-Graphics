@@ -117,7 +117,7 @@ public class App extends Application {
         //ellipse.getTransforms().add(Transform.rotate(90, 50 , 100));
         
         DrawableGroup dgroup = DrawableGroup.create(rect0,ellipse,polygon);
-        dgroup.setFill(Color.BLUE);
+        dgroup.setFill(Color.RED);
         //////////////////////////////////////////////////////////////////////////
 
         //控制面板提供器

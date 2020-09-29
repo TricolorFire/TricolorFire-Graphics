@@ -12,6 +12,7 @@ import com.tricolorfire.graphics.layer.LayerPane;
 import com.tricolorfire.graphics.ui.PenetrablePane;
 
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 
 public abstract class AbstractDrawableControlPane implements IDrawableControlPane {
@@ -24,6 +25,8 @@ public abstract class AbstractDrawableControlPane implements IDrawableControlPan
 	private IDrawable tmpDrawable;
 	private LayerPane layerPane;
 	
+	private IAdjustmentProcessor defaultAdjustmentProcessor;
+	
 	protected AbstractDrawableControlPane(LayerPane layerPane, IDrawable drawable) {
 		//获取drawable
 		this.layerPane = layerPane;
@@ -33,19 +36,25 @@ public abstract class AbstractDrawableControlPane implements IDrawableControlPan
 		this.tmpDrawable = drawable.copy();
 		this.tmpDrawable.getNode().setOpacity(0.5f);
 		this.tmpDrawable.getNode().setMouseTransparent(true);
+		this.tmpDrawable.getNode().setVisible(false);
 		
 		//创建监听器
 		processorMap = new Hashtable<>();
-		pane = createPane(layerPane, tmpDrawable);
+		pane = createPane(layerPane, drawable ,tmpDrawable);
 		
 		//将临时drawbale加入其中
 		pane.getChildren().add(0,tmpDrawable.getNode());
 		
 		//添加默认适配器
-		addAdjustmentProcessor(new DefaultAdjustmentProcessor());
+		defaultAdjustmentProcessor = new DefaultAdjustmentProcessor();
+		addAdjustmentProcessor(defaultAdjustmentProcessor);
 	}
 	
-	protected abstract PenetrablePane createPane(LayerPane layerPane , IDrawable drawable);
+	protected IAdjustmentProcessor getDefaultAdjustmentProcessor() {
+		return defaultAdjustmentProcessor;
+	}
+	
+	protected abstract PenetrablePane createPane(LayerPane layerPane , IDrawable drawable ,IDrawable tmpDrawable);
 	
 	@Override
 	public PenetrablePane getPane() {
@@ -93,14 +102,23 @@ public abstract class AbstractDrawableControlPane implements IDrawableControlPan
 	
 	//处理器
 	class DefaultAdjustmentProcessor implements IAdjustmentProcessor{
+		//记录
+		Map<Node,Boolean> record = new Hashtable<>();
 		@Override
 		public void start(LayerPane layerPane, IDrawable drawable) {
+			for(Node node: pane.getChildren()) {
+				record.put(node, node.isVisible());
+				node.setVisible(false);
+			}
 			tmpDrawable.getNode().setVisible(true);
 		}
 		
 		@Override
 		public void finished(LayerPane layerPane, IDrawable drawable) {
 			tmpDrawable.loadBoundsInfoTo(drawable);
+			for(Node node: pane.getChildren()) {
+				node.setVisible(record.get(node));
+			}
 			tmpDrawable.getNode().setVisible(false);
 		}
 	}

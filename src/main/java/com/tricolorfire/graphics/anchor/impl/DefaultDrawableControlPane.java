@@ -1,6 +1,9 @@
 package com.tricolorfire.graphics.anchor.impl;
 
+import java.util.Set;
+
 import com.tricolorfire.graphics.anchor.AbstractDrawableControlPane;
+import com.tricolorfire.graphics.anchor.interfaces.IAdjustmentProcessor;
 import com.tricolorfire.graphics.anchor.interfaces.IDrawableControlPane;
 import com.tricolorfire.graphics.anchor.pane.RectangularDrawableControlPane;
 import com.tricolorfire.graphics.anchor.pane.RotateControlPane;
@@ -17,23 +20,19 @@ import javafx.scene.input.MouseEvent;
 
 public class DefaultDrawableControlPane extends AbstractDrawableControlPane implements IDrawableControlPane{
 	
-	private IDrawable drawable;
-	
 	public DefaultDrawableControlPane(LayerPane layerPane, IDrawable drawable) {
 		super(layerPane,drawable);
 	}
 
 	@Override
-	protected PenetrablePane createPane(LayerPane layerPane , IDrawable drawable) {
-		
-		this.drawable = drawable;
+	protected PenetrablePane createPane(LayerPane layerPane , IDrawable drawable , IDrawable tmpDrawable) {
 		
 		//矩形区域控制
-		RectangularDrawableControlPane rectControl = new RectangularDrawableControlPane(drawable);
+		RectangularDrawableControlPane rectControl = new RectangularDrawableControlPane(tmpDrawable);
 		rectControl.adaptToNewScale(layerPane.scaleXProperty());
 		
 		//旋转控制
-		RotateControlPane rotateControl = new RotateControlPane(drawable);
+		RotateControlPane rotateControl = new RotateControlPane(tmpDrawable);
 		rotateControl.adaptToNewScale(layerPane.scaleXProperty());
 		
 		//控制面板
@@ -41,32 +40,44 @@ public class DefaultDrawableControlPane extends AbstractDrawableControlPane impl
 		mainPane.getChildren().addAll(rotateControl,rectControl);
 		
 		//drawable 添加移动控制监听器
-		//addShapeMoveListener();
+		addShapeMoveListener(layerPane,drawable,tmpDrawable);
 		
 		return mainPane;		
 	}
 	
-	/*//为drawable的图形添加移动监听器
 	private EventHandler<MouseEvent> shapeMoveListener;
-	private void addShapeMoveListener() {
+	
+	public EventHandler<MouseEvent> getShapeMoveListener(){
+		return shapeMoveListener;
+	}
+	
+	//为drawable的图形添加移动监听器
+	private void addShapeMoveListener(LayerPane layerPane , IDrawable drawable , IDrawable tmpDrawable) {
 		Node node = drawable.getNode();
 		node.setCursor(Cursor.MOVE);
 		
 		shapeMoveListener = new EventHandler<MouseEvent>() {
 			
 			private double dx,dy;
-
+			
 			@Override
 			public void handle(MouseEvent event) {
-
+				
 				Point2D center = CoordinateHelper.computeCenterPosition(drawable);
+				Set<IAdjustmentProcessor> processors = getAdjustmentProcessors();
 				
  				if(event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
+ 					//开始调整
+ 					for(IAdjustmentProcessor processor : processors) {
+ 						processor.start(layerPane, drawable);
+ 					}
  					
+ 					/*
  					Point2D realPosition = computeRealPosition(
  							center,
  							event.getX(),
  							event.getY());
+ 					*/
  					
  					dx = - event.getX(); //realPosition.getX() ;
  					dy = - event.getY(); //realPosition.getY() ;
@@ -79,15 +90,18 @@ public class DefaultDrawableControlPane extends AbstractDrawableControlPane impl
  					
  					Point2D realPosition = computeRealPosition(
  							center,
- 							tx + event.getX() + dx,
- 							ty + event.getY() + dy);
+ 							tx + event.getX() ,
+ 							ty + event.getY() );
  					
- 					drawable.setLocation(
+ 					tmpDrawable.setLocation(
  							realPosition.getX() , 
  							realPosition.getY() );
 
         		} else if(event.getEventType().equals(MouseEvent.MOUSE_RELEASED)) {
-        			
+        			//调整完成
+ 					for(IAdjustmentProcessor processor : processors) {
+ 						processor.finished(layerPane, drawable);
+ 					}
         		}
 			}
 
@@ -98,5 +112,5 @@ public class DefaultDrawableControlPane extends AbstractDrawableControlPane impl
 		
 		node.addEventHandler(MouseEvent.ANY, shapeMoveListener);
 	}
-	*/
+	
 }
