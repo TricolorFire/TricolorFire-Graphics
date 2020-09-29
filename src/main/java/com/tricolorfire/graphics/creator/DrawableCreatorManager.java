@@ -1,6 +1,6 @@
 package com.tricolorfire.graphics.creator;
 
-import com.tricolorfire.graphics.drawable.BrushParameters;
+//import com.tricolorfire.graphics.drawable.BrushParameters;
 
 public class DrawableCreatorManager {
 	
