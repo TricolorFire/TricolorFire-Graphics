@@ -61,7 +61,7 @@ public class DrawableCreator implements EventHandler<MouseEvent>{
 				//TODO 将drawable 置入矢量层
 				layerPane.getVectorLayer().addDrawable(drawable);
 				//清所有临时节点
-				context.getTmpNodes().clear();
+				context.getTempDrawables().clear();
 			}
 			
 		}		

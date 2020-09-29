@@ -5,7 +5,7 @@ import com.tricolorfire.graphics.drawable.BrushParameters;
 public class DrawableCreatorManager {
 	
 	//全局绘制参数
-	private BrushParameters brushParameters;
+	//private BrushParameters brushParameters;
 	
 	//当前的Creator
 	

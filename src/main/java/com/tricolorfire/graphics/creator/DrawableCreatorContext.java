@@ -3,13 +3,13 @@ package com.tricolorfire.graphics.creator;
 import java.util.LinkedList;
 
 import com.tricolorfire.graphics.drawable.BrushParameters;
+import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
 import com.tricolorfire.graphics.layer.Layer;
 import com.tricolorfire.graphics.util.ObservableStack;
 import com.tricolorfire.graphics.util.SimpleObservableStack;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 
 /**
  * DrawableCreatorContext
@@ -20,7 +20,7 @@ public class DrawableCreatorContext {
 	
 	private BrushParameters brushParameters; //画笔参数
 	
-	private ObservableList<Node> tmpNodes;   //临时层的节点
+	private ObservableList<IDrawable> tempDrawables;   //临时层的节点
 	
 	//当鼠标左键松开(release)一次/检测到一次输入信号时，将鼠标坐标压入栈中(x坐标栈,y坐标栈)。
 	private ObservableStack<Double> xPoints,yPoints; 
@@ -28,7 +28,7 @@ public class DrawableCreatorContext {
 	private double nowX,nowY;                //鼠标现在的位置
 	
 	public DrawableCreatorContext(Layer layer) {
-		tmpNodes = layer.getChildren();
+		tempDrawables = layer.getDrawables();
 		FXCollections.observableList(new LinkedList<Double>());
 		xPoints = new SimpleObservableStack<>();
 		yPoints = new SimpleObservableStack<>();
@@ -48,20 +48,20 @@ public class DrawableCreatorContext {
 		this.nowY = nowY;
 	}
 	
-	public ObservableList<Node> getTmpNodes() {
-		return tmpNodes;
+	public ObservableList<IDrawable> getTempDrawables() {
+		return tempDrawables;
 	}
 	
 	//获取第一个临时节点
-	public Node fristTempNode() {
-		if(tmpNodes.isEmpty()) return null;
-		return tmpNodes.get(0);
+	public IDrawable fristTempDrawable() {
+		if(tempDrawables.isEmpty()) return null;
+		return tempDrawables.get(0);
 	}
 	
 	//获取最后一个临时节点
-	public Node lastTempNode() {
-		if(tmpNodes.isEmpty()) return null;
-		return tmpNodes.get(tmpNodes.size() -1);
+	public IDrawable lastTempDrawable() {
+		if(tempDrawables.isEmpty()) return null;
+		return tempDrawables.get(tempDrawables.size() -1);
 	}
 	
 	public ObservableStack<Double> xPoints() {
