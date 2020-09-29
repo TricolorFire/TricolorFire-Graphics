@@ -57,7 +57,11 @@ public class DrawableCreator implements EventHandler<MouseEvent>{
 			processor.tempCreate(context);
 			if(processor.isCompleted(context)) {
 				//TODO 构建出drawable 返回创建完成的图像和控制器
+				//控制器应该是通过焦点获取
 				IDrawable drawable = processor.create(context);
+				drawable.getNode().requestFocus();
+				drawable.getNode().setFocusTraversable(false);
+				
 				//TODO 将drawable 置入矢量层
 				layerPane.getVectorLayer().addDrawable(drawable);
 				//清所有临时节点
