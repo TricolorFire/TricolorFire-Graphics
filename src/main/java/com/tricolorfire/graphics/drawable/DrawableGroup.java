@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.tricolorfire.graphics.drawable.interfaces.IBrushEmployer;
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
+import com.tricolorfire.graphics.layer.ILayer;
 import com.tricolorfire.graphics.util.IPropertyPlan;
 import com.tricolorfire.graphics.util.PlannedDoubleProperty;
 
@@ -20,7 +21,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
@@ -367,12 +367,11 @@ public class DrawableGroup extends Group implements IBrushEmployer,IDrawable {
 			drawable.setLayoutX(dx + drawable.getLayoutX());
 			drawable.setLayoutY(dy + drawable.getLayoutY());
 		}
+		
 		Parent parent = getParent();
-		if(parent instanceof Pane) {
-			List<Node> childrens = ((Pane)parent).getChildren();
-			for(IDrawable drawable : ret) {
-				childrens.add(drawable.getNode());
-			}
+		if(parent instanceof ILayer) {
+			ILayer layer = ((ILayer)parent);
+			layer.addAllDrawable(ret);
 		}
 		return ret;
 	}

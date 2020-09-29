@@ -49,9 +49,9 @@ public class DrawableCreator implements EventHandler<MouseEvent>{
 			processor.drag(context);
 		}  else if(event.getEventType().equals(MouseEvent.MOUSE_RELEASED)) {
 			
-			//记录数据
-			context.xPoints().add(event.getX());
-			context.yPoints().add(event.getY());
+			//将数据压入堆栈
+			context.xPoints().push(event.getX());
+			context.yPoints().push(event.getY());
 			
 			//构造临时节点
 			processor.tempCreate(context);
@@ -59,7 +59,7 @@ public class DrawableCreator implements EventHandler<MouseEvent>{
 				//TODO 构建出drawable 返回创建完成的图像和控制器
 				IDrawable drawable = processor.create(context);
 				//TODO 将drawable 置入矢量层
-				
+				layerPane.getVectorLayer().addDrawable(drawable);
 				//清所有临时节点
 				context.getTmpNodes().clear();
 			}
