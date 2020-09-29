@@ -4,6 +4,6 @@ import java.util.Deque;
 
 import javafx.beans.Observable;
 
-public interface IObservableStack<E> extends Deque<E>,Observable {
+public interface ObservableStack<E> extends Deque<E>,Observable {
 	
 }

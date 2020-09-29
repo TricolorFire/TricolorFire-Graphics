@@ -4,6 +4,8 @@ import java.util.LinkedList;
 
 import com.tricolorfire.graphics.drawable.BrushParameters;
 import com.tricolorfire.graphics.layer.Layer;
+import com.tricolorfire.graphics.util.ObservableStack;
+import com.tricolorfire.graphics.util.SimpleObservableStack;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,13 +23,15 @@ public class DrawableCreatorContext {
 	private ObservableList<Node> tmpNodes;   //临时层的节点
 	
 	//当鼠标左键松开(release)一次/检测到一次输入信号时，将鼠标坐标压入栈中(x坐标栈,y坐标栈)。
-	private ObservableList<Double> xPoints,yPoints; 
+	private ObservableStack<Double> xPoints,yPoints; 
 	
 	private double nowX,nowY;                //鼠标现在的位置
 	
 	public DrawableCreatorContext(Layer layer) {
 		tmpNodes = layer.getChildren();
 		FXCollections.observableList(new LinkedList<Double>());
+		xPoints = new SimpleObservableStack<>();
+		yPoints = new SimpleObservableStack<>();
 	}
 	
 	public double getNowX() {
@@ -60,10 +64,10 @@ public class DrawableCreatorContext {
 		return tmpNodes.get(tmpNodes.size() -1);
 	}
 	
-	public ObservableList<Double> xPoints() {
+	public ObservableStack<Double> xPoints() {
 		return xPoints;
 	}
-	public ObservableList<Double> yPoints() {
+	public ObservableStack<Double> yPoints() {
 		return yPoints;
 	}
 	

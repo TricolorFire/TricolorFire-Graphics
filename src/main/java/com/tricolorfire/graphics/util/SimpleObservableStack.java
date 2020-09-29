@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 
-public class SimpleObservableStack<E> implements IObservableStack<E> {
+public class SimpleObservableStack<E> implements ObservableStack<E> {
 	
 	ObservableList<E> innerList;
 	
