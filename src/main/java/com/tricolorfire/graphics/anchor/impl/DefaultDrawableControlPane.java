@@ -72,30 +72,34 @@ public class DefaultDrawableControlPane extends AbstractDrawableControlPane impl
  						processor.start(layerPane, drawable);
  					}
  					
- 					/*
+ 					///////////////////////////
+ 					//记录初始点击位置的信息
+ 					///////////////////////////
+ 					
+ 					double lx = drawable.getLayoutX();
+ 					double ly = drawable.getLayoutY();
  					Point2D realPosition = computeRealPosition(
  							center,
  							event.getX(),
  							event.getY());
- 					*/
  					
- 					dx = - event.getX(); //realPosition.getX() ;
- 					dy = - event.getY(); //realPosition.getY() ;
+ 					dx = lx - realPosition.getX() ;
+ 					dy = ly - realPosition.getY() ;
  					
  				} else if(event.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {
  					
+ 					///////////
  					//定位
- 					double tx = drawable.getLayoutX();
- 					double ty = drawable.getLayoutY();
+ 					///////////
  					
  					Point2D realPosition = computeRealPosition(
  							center,
- 							tx + event.getX() ,
- 							ty + event.getY() );
+ 							event.getX() ,
+ 							event.getY() );
  					
  					tmpDrawable.setLocation(
- 							realPosition.getX() , 
- 							realPosition.getY() );
+ 							realPosition.getX() + dx , 
+ 							realPosition.getY() + dy );
 
         		} else if(event.getEventType().equals(MouseEvent.MOUSE_RELEASED)) {
         			//调整完成
@@ -104,10 +108,11 @@ public class DefaultDrawableControlPane extends AbstractDrawableControlPane impl
  					}
         		}
 			}
-
+			
 			private Point2D computeRealPosition(Point2D center,double nowX,double nowY) {
 				return CoordinateHelper.computeRealPosition(center,Math.toRadians(drawable.getRotate()),nowX, nowY);
 			}
+			
 		};
 		
 		node.addEventHandler(MouseEvent.ANY, shapeMoveListener);
