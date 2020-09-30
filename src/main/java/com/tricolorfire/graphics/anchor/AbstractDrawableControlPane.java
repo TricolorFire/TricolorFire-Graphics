@@ -124,6 +124,9 @@ public abstract class AbstractDrawableControlPane implements IDrawableControlPan
 		}
 		
 		@Override
+		public void adjust(LayerPane layerPane, IDrawable drawable) {}
+		
+		@Override
 		public void finished(LayerPane layerPane, IDrawable drawable) {
 			if(!defaultControlPaneVisiableWhenInAdjusting) {
 				for(Node node: pane.getChildren()) {

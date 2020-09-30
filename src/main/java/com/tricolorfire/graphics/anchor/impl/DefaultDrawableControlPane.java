@@ -121,6 +121,10 @@ public class DefaultDrawableControlPane extends AbstractDrawableControlPane impl
  					dy = ly - realPosition.getY() ;
  					
  				} else if(event.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {
+ 					//调整中
+ 					for(IAdjustmentProcessor processor : processors) {
+ 						processor.adjust(layerPane, drawable);
+ 					}
  					
  					///////////
  					//定位

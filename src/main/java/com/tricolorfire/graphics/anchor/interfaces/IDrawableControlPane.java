@@ -32,6 +32,8 @@ public interface IDrawableControlPane {
 				public void handle(MouseEvent event) {
 					if(event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
 						processor.start(layerPane,drawable);
+					} else if(event.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {
+						processor.adjust(layerPane,drawable);
 					} else if (event.getEventType().equals(MouseEvent.MOUSE_RELEASED)) {
 						processor.finished(layerPane,drawable);
 					}

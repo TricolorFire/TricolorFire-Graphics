@@ -14,6 +14,13 @@ public interface IAdjustmentProcessor {
 	public void start(LayerPane layerPane, IDrawable drawable );
 	
 	/**
+	 * 调整过程
+	 * @param layerPane
+	 * @param drawable
+	 */
+	public void adjust(LayerPane layerPane, IDrawable drawable );
+	
+	/**
 	 * 调整结束
 	 * @param layerPane
 	 * @param drawable
