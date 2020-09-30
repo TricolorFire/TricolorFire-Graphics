@@ -125,12 +125,13 @@ public class App extends Application {
         DefaultControlPaneProvider paneProvider = new DefaultControlPaneProvider();
         
         //获取控制面板
-        /*
+        
         IDrawableControlPane controllor = null;
         if(paneProvider.accept(pane, dgroup)) {
         	controllor = paneProvider.createControlPanes(pane,dgroup);	
         }
-        */
+        
+        /*
         dgroup.setCursor(Cursor.MOVE);
         dgroup.addEventHandler(MouseEvent.MOUSE_PRESSED,new EventHandler<MouseEvent>() {
         	//需要一个统一的管理器
@@ -138,18 +139,18 @@ public class App extends Application {
         	DefaultControlPaneProvider paneProvider = new DefaultControlPaneProvider();
         	@Override
         	public void handle(MouseEvent event) {
-                /*
+                
         		IDrawableControlPane controllor = null;
                 if(paneProvider.accept(pane, dgroup)) {
                 	controllor = paneProvider.createControlPanes(pane,dgroup);	
                 }
         		pane.getOperationLayer().getChildren().add(controllor.getPane());
-        		*/
+        		
         	}
 		});
-        
+        */
         //层次放置
-        //pane.getOperationLayer().getChildren().add(controllor.getPane());
+        pane.getOperationLayer().getChildren().add(controllor.getPane());
         pane.getVectorLayer().addDrawable(dgroup);
         pane.autosize();
         /////////////////////////////////////////////////////////////////////////
