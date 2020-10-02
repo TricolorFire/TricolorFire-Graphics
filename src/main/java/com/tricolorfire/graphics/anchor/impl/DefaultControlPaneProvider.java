@@ -27,4 +27,9 @@ public class DefaultControlPaneProvider implements IDrawableControlPaneProvider 
 		}
 	}
 
+	@Override
+	public String getDrawableControlPaneTypeId() {
+		return "default";
+	}
+
 }

@@ -8,6 +8,8 @@ import com.tricolorfire.graphics.layer.LayerPane;
  */
 public interface IDrawableControlPaneProvider {
 	
+	public String getDrawableControlPaneTypeId();
+	
 	/**
 	 * 判断该类型的drawable是否可以由该提供器提供
 	 * @param operationLayer
@@ -27,12 +29,12 @@ public interface IDrawableControlPaneProvider {
 	/**
 	 * 面板供应政策
 	 */
-	default DisplayPolicy getDisplayPolicy() {
-		return DisplayPolicy.SECONDARY;
+	default DrawableControlPanePolicy getDisplayPolicy() {
+		return DrawableControlPanePolicy.SECONDARY;
 	}
 	
 	//显示策略
-	public enum DisplayPolicy {
+	public enum DrawableControlPanePolicy {
 		//隐藏其他控制面板
 		HIDE_OTHER_CONTROL_PANE,
 		//隐藏自己
