@@ -131,6 +131,7 @@ public class App extends Application {
         	controllor = paneProvider.createControlPanes(pane,dgroup);	
         }
         
+        
         /*
         dgroup.setCursor(Cursor.MOVE);
         dgroup.addEventHandler(MouseEvent.MOUSE_PRESSED,new EventHandler<MouseEvent>() {
