@@ -10,6 +10,7 @@ module com.tricolorfire.graphics {
     requires javafx.swing;
 	requires javafx.base;
     requires javafx.graphics;
+	requires dom4j;
     
     exports com.tricolorfire.graphics;
 }
