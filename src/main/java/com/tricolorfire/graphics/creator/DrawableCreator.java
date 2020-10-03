@@ -42,14 +42,21 @@ public class DrawableCreator implements EventHandler<MouseEvent>{
 			//将数据压入堆栈
 			context.xPoints().push(event.getX());
 			context.yPoints().push(event.getY());
+			
 			//构造第一个临时图像
 			IDrawable fristTempDrawable = processor.initTempCreate(context);
+			
 			//如果自动跟随绘制参数
 			if(processor.isDefaultFollowBrushParameters()) {
 				brushParameters.loadGraphicsInfoTo(fristTempDrawable);
 			}
+			
+			//将第一个临时图像添加到临时层中
 			temporaryDrawingLayer.addDrawable(fristTempDrawable);
+			
+			//first标记置否
 			first = false;
+			
 		} else if (event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
 			//将数据压入堆栈
 			context.xPoints().push(event.getX());
@@ -83,6 +90,10 @@ public class DrawableCreator implements EventHandler<MouseEvent>{
 				
 				//清所有临时节点
 				context.getTempDrawables().clear();
+				
+				//堆栈清理
+				context.xPoints().clear();
+				context.yPoints().clear();
 			}
 			
 		}		
