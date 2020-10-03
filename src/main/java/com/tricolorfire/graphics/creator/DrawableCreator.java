@@ -1,6 +1,8 @@
 package com.tricolorfire.graphics.creator;
 
+import com.tricolorfire.graphics.drawable.BrushParameters;
 import com.tricolorfire.graphics.drawable.interfaces.IDrawable;
+import com.tricolorfire.graphics.layer.Layer;
 import com.tricolorfire.graphics.layer.LayerPane;
 
 import javafx.event.EventHandler;
@@ -9,20 +11,23 @@ import javafx.scene.input.MouseEvent;
 public class DrawableCreator implements EventHandler<MouseEvent>{
 	//构造过程
 	private IDrawableCreativeProcessor<IDrawable> processor;
+	private BrushParameters brushParameters;
 	
 	//图层页面
 	private LayerPane layerPane;
+	private Layer temporaryDrawingLayer;
 	
 	//
 	private DrawableCreatorContext context;
 	private boolean first = true;
 	
-	public DrawableCreator(LayerPane layerPane) {
+	public DrawableCreator(LayerPane layerPane,BrushParameters brushParameters) {
 		if(layerPane == null ) {
 			throw new NullPointerException();
 		}
-		this.layerPane = layerPane;
-		context = new DrawableCreatorContext(layerPane.getTemporaryDrawingLayer());
+		
+		this.temporaryDrawingLayer = layerPane.getTemporaryDrawingLayer();
+		update(layerPane, brushParameters);
 	}
 	
 	@Override
@@ -34,15 +39,21 @@ public class DrawableCreator implements EventHandler<MouseEvent>{
 		
 		//第一次点击
 		if(first && event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
-			processor.initTempCreate(context);
+			//将数据压入堆栈
+			context.xPoints().push(event.getX());
+			context.yPoints().push(event.getY());
+			//构造第一个临时图像
+			IDrawable fristTempDrawable = processor.initTempCreate(context);
+			//如果自动跟随绘制参数
+			if(processor.isDefaultFollowBrushParameters()) {
+				brushParameters.loadGraphicsInfoTo(fristTempDrawable);
+			}
+			temporaryDrawingLayer.addDrawable(fristTempDrawable);
 			first = false;
 		} else if (event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
-			//
-			
-			//
-			
-			//
-			
+			//将数据压入堆栈
+			context.xPoints().push(event.getX());
+			context.yPoints().push(event.getY());
 		} else if(event.getEventType().equals(MouseEvent.MOUSE_MOVED)) {
 			processor.move(context);
 		} else if(event.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {
@@ -56,14 +67,20 @@ public class DrawableCreator implements EventHandler<MouseEvent>{
 			//构造临时节点
 			processor.tempCreate(context);
 			if(processor.isCompleted(context)) {
-				//TODO 构建出drawable 返回创建完成的图像和控制器
+				//将first标记复原
+				first = true;
+				
 				//控制器应该是通过焦点获取
 				IDrawable drawable = processor.create(context);
-				drawable.getNode().requestFocus();
-				drawable.getNode().setFocusTraversable(false);
 				
-				//TODO 将drawable 置入矢量层
+				//画笔参数载入
+				if(processor.isDefaultFollowBrushParameters()) {
+					brushParameters.loadGraphicsInfoTo(drawable);
+				}
+				
+				//将drawable 置入矢量层
 				layerPane.getVectorLayer().addDrawable(drawable);
+				
 				//清所有临时节点
 				context.getTempDrawables().clear();
 			}
@@ -81,7 +98,12 @@ public class DrawableCreator implements EventHandler<MouseEvent>{
 	}
 
 	public void setLayerPane(LayerPane layerPane) {
+		update(layerPane, brushParameters);
+	}
+	
+	public void update(LayerPane layerPane,BrushParameters brushParameters) {
 		this.layerPane = layerPane;
-		context = new DrawableCreatorContext(layerPane.getTemporaryDrawingLayer());
+		this.brushParameters = brushParameters;
+		context = new DrawableCreatorContext(layerPane.getTemporaryDrawingLayer(),brushParameters);
 	}
 }

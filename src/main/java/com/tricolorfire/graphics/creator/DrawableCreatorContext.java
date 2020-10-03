@@ -22,16 +22,18 @@ public class DrawableCreatorContext {
 	
 	private ObservableList<IDrawable> tempDrawables;   //临时层的节点
 	
-	//当鼠标左键松开(release)一次/检测到一次输入信号时，将鼠标坐标压入栈中(x坐标栈,y坐标栈)。
+	//当鼠标左键按下(pressed)/松开(release)一次/检测到一次输入信号时，将鼠标坐标压入栈中(x坐标栈,y坐标栈)。
 	private ObservableStack<Double> xPoints,yPoints; 
 	
 	private double nowX,nowY;                //鼠标现在的位置
 	
-	public DrawableCreatorContext(Layer layer) {
+	public DrawableCreatorContext(Layer layer,BrushParameters brushParameters) {
 		tempDrawables = layer.getDrawables();
 		FXCollections.observableList(new LinkedList<Double>());
 		xPoints = new SimpleObservableStack<>();
 		yPoints = new SimpleObservableStack<>();
+		this.brushParameters = new BrushParameters();
+		brushParameters.loadGraphicsInfoTo(this.brushParameters);
 	}
 	
 	public double getNowX() {
